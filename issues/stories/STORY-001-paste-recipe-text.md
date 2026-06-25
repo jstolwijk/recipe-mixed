@@ -1,5 +1,7 @@
 # STORY-001: Paste Recipe Text
 
+Status: Backlog
+
 ## User Story
 
 As a home cook, I want to paste a recipe into the app, so that I can remix it without relying on a supported website.

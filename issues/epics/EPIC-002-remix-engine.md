@@ -1,5 +1,7 @@
 # EPIC-002: Remix Engine
 
+Status: Backlog
+
 ## Goal
 
 Transform a source recipe into a coherent remix that follows the user's chosen direction and remains practical to cook.

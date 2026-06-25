@@ -1,5 +1,7 @@
 # STORY-002: Import Recipe Link
 
+Status: Backlog
+
 ## User Story
 
 As a home cook, I want to paste a recipe URL, so that I can remix a recipe without manually copying all of its text.

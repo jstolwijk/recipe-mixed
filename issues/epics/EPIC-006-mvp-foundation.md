@@ -1,5 +1,7 @@
 # EPIC-006: MVP Foundation
 
+Status: Backlog
+
 ## Goal
 
 Build the minimum technical and product foundation needed to ship a reliable first version.

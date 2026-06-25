@@ -1,5 +1,7 @@
 # STORY-010: Save Remix
 
+Status: Backlog
+
 ## User Story
 
 As a home cook, I want to save a remixed recipe, so that I can come back to it later.

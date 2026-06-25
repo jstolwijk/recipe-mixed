@@ -1,5 +1,7 @@
 # STORY-000: Tech Stack And Scaffolding
 
+Status: Backlog
+
 ## User Story
 
 As the product owner, I want the technical stack and deployment scaffold defined before implementation, so that the first build matches the intended Raspberry Pi, Docker, and Cloudflare Tunnel deployment model.

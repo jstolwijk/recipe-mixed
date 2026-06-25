@@ -1,5 +1,7 @@
 # STORY-003: Normalize Recipe Structure
 
+Status: Backlog
+
 ## User Story
 
 As the system, I want to normalize recipe inputs into a consistent structure, so that remix generation can use reliable fields.

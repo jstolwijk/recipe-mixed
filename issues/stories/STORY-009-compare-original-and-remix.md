@@ -1,5 +1,7 @@
 # STORY-009: Compare Original And Remix
 
+Status: Backlog
+
 ## User Story
 
 As a home cook, I want to compare the original recipe with the remix, so that I can understand the transformation and decide what to cook.

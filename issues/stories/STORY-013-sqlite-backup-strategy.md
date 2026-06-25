@@ -1,5 +1,7 @@
 # STORY-013: SQLite Backup Strategy
 
+Status: Backlog
+
 ## User Story
 
 As the product owner, I want a clear SQLite backup strategy, so that recipe data can be recovered if the Raspberry Pi storage, deploy process, or application data file fails.

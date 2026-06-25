@@ -1,5 +1,7 @@
 # STORY-011: Share Or Copy Remix
 
+Status: Backlog
+
 ## User Story
 
 As a home cook, I want to share or copy a remixed recipe, so that I can send it to someone or cook from another place.

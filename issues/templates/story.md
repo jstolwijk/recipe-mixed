@@ -1,5 +1,7 @@
 # STORY-000: Story Title
 
+Status: Backlog
+
 ## User Story
 
 As a user, I want to..., so that...
@@ -19,4 +21,4 @@ Why this story exists and how it supports the related epic.
 
 ## Dependencies
 
-- 
+-

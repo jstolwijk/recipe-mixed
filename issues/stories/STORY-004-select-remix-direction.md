@@ -1,5 +1,7 @@
 # STORY-004: Select Remix Direction
 
+Status: Backlog
+
 ## User Story
 
 As a home cook, I want to choose how my recipe should be remixed, so that the result matches what I want to cook tonight.

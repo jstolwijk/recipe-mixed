@@ -1,5 +1,7 @@
 # STORY-008: Remix Adjustments
 
+Status: Backlog
+
 ## User Story
 
 As a home cook, I want to adjust a remix after seeing it, so that I can make it fit my taste, pantry, or schedule.

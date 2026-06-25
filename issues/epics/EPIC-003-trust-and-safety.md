@@ -1,5 +1,7 @@
 # EPIC-003: Trust And Safety
 
+Status: Backlog
+
 ## Goal
 
 Help users trust the remixed recipe by explaining changes, checking cookability, and surfacing safety concerns.

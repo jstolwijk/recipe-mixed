@@ -1,5 +1,7 @@
 # EPIC-004: Remix Experience
 
+Status: Backlog
+
 ## Goal
 
 Create a focused workflow for configuring, reviewing, and iterating on a recipe remix.

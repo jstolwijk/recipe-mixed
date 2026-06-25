@@ -1,5 +1,7 @@
 # STORY-007: Cooking Sanity Check
 
+Status: Backlog
+
 ## User Story
 
 As a home cook, I want the app to check the remixed recipe for obvious cooking problems, so that I do not waste ingredients on a broken recipe.

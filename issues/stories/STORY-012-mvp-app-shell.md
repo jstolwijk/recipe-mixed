@@ -1,5 +1,7 @@
 # STORY-012: MVP App Shell
 
+Status: Backlog
+
 ## User Story
 
 As a first-time user, I want a clear app flow from recipe input to remix result, so that I can understand the product quickly.

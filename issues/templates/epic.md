@@ -1,5 +1,7 @@
 # EPIC-000: Epic Title
 
+Status: Backlog
+
 ## Goal
 
 State the larger product outcome this epic should create.
@@ -25,4 +27,4 @@ Explain the user or business reason this work matters.
 
 ## Open Questions
 
-- 
+-

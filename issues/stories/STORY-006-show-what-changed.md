@@ -1,5 +1,7 @@
 # STORY-006: Show What Changed
 
+Status: Backlog
+
 ## User Story
 
 As a home cook, I want to see what changed from the original recipe, so that I can trust and adjust the remix.

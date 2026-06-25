@@ -1,5 +1,7 @@
 # STORY-005: Generate Remixed Recipe
 
+Status: Backlog
+
 ## User Story
 
 As a home cook, I want the app to generate a complete remixed recipe, so that I can cook the new version.

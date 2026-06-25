@@ -1,5 +1,7 @@
 # EPIC-001: Recipe Input
 
+Status: Backlog
+
 ## Goal
 
 Let users provide an existing recipe as the starting point for a remix.
