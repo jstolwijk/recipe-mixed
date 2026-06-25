@@ -29,6 +29,14 @@ import { Textarea } from "@/components/ui/textarea";
 type RemixDirection = "french" | "chinese" | "pantry" | "vegetarian";
 type FlowStep = "draft" | "loading" | "review";
 
+type ParsedRecipe = {
+  title: string;
+  ingredients: string[];
+  steps: string[];
+  servings: string;
+  time: string;
+};
+
 const defaultRecipe = `Creamy tomato pasta
 
 Ingredients
@@ -156,6 +164,63 @@ const stepLabels: Array<{ key: FlowStep | "saved"; label: string }> = [
   { key: "saved", label: "Save" }
 ];
 
+function cleanListItem(line: string) {
+  return line.replace(/^[-*•]\s*/, "").replace(/^\d+[.)]\s*/, "").trim();
+}
+
+function parseRecipeText(text: string): ParsedRecipe {
+  const lines = text
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const title =
+    lines.find((line) => !/^(ingredients?|steps?|directions?|method|instructions?)$/i.test(line)) ?? "";
+  const servings = text.match(/\b(serves?|servings?|yield)\s*:?\s*([^\n]+)/i)?.[2]?.trim() ?? "";
+  const time =
+    text.match(/\b(total|prep|cook)\s*time\s*:?\s*([^\n]+)/i)?.[2]?.trim() ??
+    text.match(/\b(\d+\s*(?:minutes?|mins?|hours?|hrs?))\b/i)?.[1] ??
+    "";
+
+  const ingredients: string[] = [];
+  const steps: string[] = [];
+  let section: "ingredients" | "steps" | null = null;
+
+  for (const line of lines) {
+    if (/^ingredients?:?$/i.test(line)) {
+      section = "ingredients";
+      continue;
+    }
+
+    if (/^(steps?|directions?|method|instructions?):?$/i.test(line)) {
+      section = "steps";
+      continue;
+    }
+
+    if (!section) {
+      continue;
+    }
+
+    const item = cleanListItem(line);
+    if (!item) {
+      continue;
+    }
+
+    if (section === "ingredients") {
+      ingredients.push(item);
+    } else {
+      steps.push(item);
+    }
+  }
+
+  return {
+    title,
+    ingredients: ingredients.slice(0, 8),
+    steps: steps.slice(0, 6),
+    servings,
+    time
+  };
+}
+
 function App() {
   const [recipeName, setRecipeName] = React.useState("Creamy tomato pasta");
   const [recipeText, setRecipeText] = React.useState(defaultRecipe);
@@ -169,6 +234,15 @@ function App() {
 
   const remix = directionCopy[direction];
   const canReview = step === "review";
+  const parsedRecipe = React.useMemo(() => parseRecipeText(recipeText), [recipeText]);
+  const recipeWordCount = recipeText.trim().split(/\s+/).filter(Boolean).length;
+  const detectionCount = [
+    parsedRecipe.title,
+    parsedRecipe.servings,
+    parsedRecipe.time,
+    parsedRecipe.ingredients.length ? parsedRecipe.ingredients : "",
+    parsedRecipe.steps.length ? parsedRecipe.steps : ""
+  ].filter(Boolean).length;
 
   function buildResultText() {
     return `${remix.title}
@@ -185,22 +259,28 @@ What changed
 ${remix.changes.map((change) => `- ${change}`).join("\n")}`;
   }
 
-  function startRemix(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function proceedToRemix() {
     setCopyStatus("");
     setSaved(false);
-
-    if (recipeText.trim().length < 80) {
-      setError("Add a fuller recipe with ingredients and steps before remixing.");
-      setStep("draft");
-      return;
-    }
-
     setError("");
     setStep("loading");
     window.setTimeout(() => {
       setStep("review");
     }, 900);
+  }
+
+  function startRemix(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (recipeText.trim().length < 80) {
+      setCopyStatus("");
+      setSaved(false);
+      setError("This paste looks short. Add ingredients and steps for better results, or continue anyway.");
+      setStep("draft");
+      return;
+    }
+
+    proceedToRemix();
   }
 
   async function copyRemix() {
@@ -218,8 +298,10 @@ ${remix.changes.map((change) => `- ${change}`).join("\n")}`;
       "recipe-mixer-remixes",
       JSON.stringify([
         {
+          detected: parsedRecipe,
           direction: remix.label,
           original: recipeName,
+          originalText: recipeText,
           savedAt: new Date().toISOString(),
           title: remix.title
         },
@@ -367,18 +449,23 @@ ${remix.changes.map((change) => `- ${change}`).join("\n")}`;
           {error ? (
             <div
               className="grid gap-3 rounded-md border border-destructive/40 bg-destructive/10 p-4 text-destructive"
-              role="alert"
+              role="status"
             >
               <div className="flex items-start gap-3">
                 <AlertTriangle aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0" />
                 <div>
-                  <h2 className="font-bold">Cannot remix yet</h2>
+                  <h2 className="font-bold">Recipe may be incomplete</h2>
                   <p className="text-sm text-foreground">{error}</p>
                 </div>
               </div>
-              <Button className="w-fit" onClick={() => setError("")} type="button" variant="outline">
-                Review recipe
-              </Button>
+              <div className="flex flex-col gap-2 sm:flex-row">
+                <Button className="w-fit" onClick={proceedToRemix} type="button">
+                  Continue anyway
+                </Button>
+                <Button className="w-fit" onClick={() => setError("")} type="button" variant="outline">
+                  Review recipe
+                </Button>
+              </div>
             </div>
           ) : null}
 
@@ -482,14 +569,78 @@ ${remix.changes.map((change) => `- ${change}`).join("\n")}`;
                 </div>
 
                 <div className="grid gap-3">
-                  {(canReview ? remix.changes : ["Flavor direction ready", "Timing target set", "Cook profile selected"]).map(
-                    (change) => (
-                      <div className="rounded-md border bg-paper p-3 text-sm" key={change}>
-                        {change}
-                      </div>
-                    )
-                  )}
+                  {(canReview
+                    ? remix.changes
+                    : ["Flavor direction ready", "Timing target set", "Cook profile selected"]
+                  ).map((change) => (
+                    <div className="rounded-md border bg-paper p-3 text-sm" key={change}>
+                      {change}
+                    </div>
+                  ))}
                 </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="p-4 sm:p-5">
+                <CardTitle className="text-lg font-black">Detected from paste</CardTitle>
+              </CardHeader>
+              <CardContent className="grid gap-4 p-4 pt-0 text-sm sm:p-5 sm:pt-0">
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="secondary">{recipeWordCount} words</Badge>
+                  <Badge variant={detectionCount ? "default" : "outline"}>
+                    {detectionCount ? `${detectionCount} fields` : "No fields yet"}
+                  </Badge>
+                </div>
+
+                <dl className="grid gap-3">
+                  <div>
+                    <dt className="font-bold">Title</dt>
+                    <dd className="mt-1 text-muted-foreground">{parsedRecipe.title || "Not detected"}</dd>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
+                    <div>
+                      <dt className="font-bold">Servings</dt>
+                      <dd className="mt-1 text-muted-foreground">{parsedRecipe.servings || "Not detected"}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-bold">Time</dt>
+                      <dd className="mt-1 text-muted-foreground">{parsedRecipe.time || "Not detected"}</dd>
+                    </div>
+                  </div>
+                  <div>
+                    <dt className="font-bold">Ingredients</dt>
+                    <dd className="mt-2 grid gap-2">
+                      {parsedRecipe.ingredients.length ? (
+                        parsedRecipe.ingredients.map((ingredient) => (
+                          <span className="rounded-md border bg-paper px-3 py-2" key={ingredient}>
+                            {ingredient}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-muted-foreground">Not detected</span>
+                      )}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="font-bold">Steps</dt>
+                    <dd className="mt-2 grid gap-2">
+                      {parsedRecipe.steps.length ? (
+                        parsedRecipe.steps.map((recipeStep, index) => (
+                          <span
+                            className="grid grid-cols-[24px_minmax(0,1fr)] rounded-md border bg-paper px-3 py-2"
+                            key={recipeStep}
+                          >
+                            <span className="font-bold text-primary">{index + 1}</span>
+                            <span>{recipeStep}</span>
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-muted-foreground">Not detected</span>
+                      )}
+                    </dd>
+                  </div>
+                </dl>
               </CardContent>
             </Card>
           </section>

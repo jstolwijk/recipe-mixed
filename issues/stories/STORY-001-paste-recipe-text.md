@@ -1,6 +1,6 @@
 # STORY-001: Paste Recipe Text
 
-Status: Backlog
+Status: Done
 
 ## User Story
 
