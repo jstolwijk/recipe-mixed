@@ -53,7 +53,7 @@ setup:
 	@printf '%s\n' 'setup ok'
 
 dev: check-dev-port
-	WEB_PORT=$(WEB_PORT) PUBLIC_APP_ORIGIN=$(PUBLIC_APP_ORIGIN) docker compose up --build
+	WEB_PORT=$(WEB_PORT) PUBLIC_APP_ORIGIN=$(PUBLIC_APP_ORIGIN) docker compose --env-file .env.dev up --build
 
 check-dev-port:
 	@if command -v lsof >/dev/null 2>&1 && lsof -nP -iTCP:$(WEB_PORT) -sTCP:LISTEN >/dev/null 2>&1; then \

@@ -115,38 +115,38 @@
     "semantic_hash": "893def771b2c8653b3ee9ea781d6d614"
   },
   "issues/README.md": {
-    "mtime": 1782420706.9036775,
-    "ast_hash": "0a634d6b67622caecb801c41d3f710d4",
+    "mtime": 1782420947.933119,
+    "ast_hash": "686567e0f4ee0b0c03b80f4e010b8e15",
     "semantic_hash": ""
   },
   "issues/epics/EPIC-001-recipe-input.md": {
-    "mtime": 1782417179.7997541,
-    "ast_hash": "b4584642a9849bb0879dba484b791919",
+    "mtime": 1782420924.394946,
+    "ast_hash": "69277fddde10cdf22b74973bb3565227",
     "semantic_hash": ""
   },
   "issues/epics/EPIC-002-remix-engine.md": {
-    "mtime": 1782417179.8003898,
-    "ast_hash": "e8598d87cc67c9968aebd74f64988776",
+    "mtime": 1782420924.5292795,
+    "ast_hash": "b00047899c6786bbef513062fc17cde9",
     "semantic_hash": ""
   },
   "issues/epics/EPIC-003-trust-and-safety.md": {
-    "mtime": 1782417179.8010547,
-    "ast_hash": "19954c41a434892b4244849bce272820",
+    "mtime": 1782420924.6624546,
+    "ast_hash": "3df7b590f306b2853281b6fd0ed6ffec",
     "semantic_hash": ""
   },
   "issues/epics/EPIC-004-remix-experience.md": {
-    "mtime": 1782417179.8014793,
-    "ast_hash": "1c2e40cb267e22e2686652aca83cf1b5",
+    "mtime": 1782420924.795317,
+    "ast_hash": "204d28d79c1fb39d9a22968d6bfc11df",
     "semantic_hash": ""
   },
   "issues/epics/EPIC-005-saving-and-sharing.md": {
-    "mtime": 1782417179.8017623,
-    "ast_hash": "76d0343b29210e16d4a104cda8fbafc5",
+    "mtime": 1782420924.9263988,
+    "ast_hash": "105d55d188eabcb49f202dc6340f3f7d",
     "semantic_hash": ""
   },
   "issues/epics/EPIC-006-mvp-foundation.md": {
-    "mtime": 1782417179.8023913,
-    "ast_hash": "8cf9e46a27b521c30b7c845033c75f81",
+    "mtime": 1782420925.0607502,
+    "ast_hash": "b6c153137ac0657d08bddb943fdf8ef6",
     "semantic_hash": ""
   },
   "issues/stories/STORY-000-tech-stack-and-scaffolding.md": {
@@ -160,8 +160,8 @@
     "semantic_hash": ""
   },
   "issues/stories/STORY-002-import-recipe-link.md": {
-    "mtime": 1782417179.804593,
-    "ast_hash": "c72795b64d65985468c2fc9d26fd0b7e",
+    "mtime": 1782420923.198361,
+    "ast_hash": "85e70b7d2e1817053dd2396a7246700a",
     "semantic_hash": ""
   },
   "issues/stories/STORY-003-normalize-recipe-structure.md": {
@@ -170,43 +170,43 @@
     "semantic_hash": ""
   },
   "issues/stories/STORY-004-select-remix-direction.md": {
-    "mtime": 1782417179.8057876,
-    "ast_hash": "016fb431179e4967ef7c9d46ee7e0b25",
+    "mtime": 1782420923.3339262,
+    "ast_hash": "6132568c3064d5570bdddb32386f9842",
     "semantic_hash": ""
   },
   "issues/stories/STORY-005-generate-remixed-recipe.md": {
-    "mtime": 1782418841.6777341,
-    "ast_hash": "681fe67d8856d173cb4554a626796d8f",
+    "mtime": 1782420923.468255,
+    "ast_hash": "d6274110eda14184a5157af19c7eb6de",
     "semantic_hash": ""
   },
   "issues/stories/STORY-006-show-what-changed.md": {
-    "mtime": 1782417179.8198404,
-    "ast_hash": "97740de5eecb0e9088506b343c7c92be",
+    "mtime": 1782420923.6039212,
+    "ast_hash": "2f22f24c009294a0d1c1203e9c3c2481",
     "semantic_hash": ""
   },
   "issues/stories/STORY-007-cooking-sanity-check.md": {
-    "mtime": 1782417179.8219206,
-    "ast_hash": "c1a5b15e956cbd50d23545c2cc9afc1a",
+    "mtime": 1782420923.7360945,
+    "ast_hash": "653effa8718dcff1df49b9929f9ca6ee",
     "semantic_hash": ""
   },
   "issues/stories/STORY-008-remix-adjustments.md": {
-    "mtime": 1782417179.8222783,
-    "ast_hash": "1968f6379721303058280f443a18fde0",
+    "mtime": 1782420923.8682294,
+    "ast_hash": "3eea86bfcdb826e7d22d979a28e863ad",
     "semantic_hash": ""
   },
   "issues/stories/STORY-009-compare-original-and-remix.md": {
-    "mtime": 1782417179.8227901,
-    "ast_hash": "e77d13b330bdb5defa95c91cea0c7ec2",
+    "mtime": 1782420923.9993641,
+    "ast_hash": "d69b2b62cb4d0e6933e6df85dde854bb",
     "semantic_hash": ""
   },
   "issues/stories/STORY-010-save-remix.md": {
-    "mtime": 1782417179.8236108,
-    "ast_hash": "b1a85d5931b3c8d8c405c14abf0e62a5",
+    "mtime": 1782420924.1321135,
+    "ast_hash": "7eca77188bc9058a7227f437680d8e5d",
     "semantic_hash": ""
   },
   "issues/stories/STORY-011-share-or-copy-remix.md": {
-    "mtime": 1782417179.824364,
-    "ast_hash": "65ec111bd30ce50c6a9851df2687e9f6",
+    "mtime": 1782420924.263018,
+    "ast_hash": "a4fef4495483260ab9d79b18177fca34",
     "semantic_hash": ""
   },
   "issues/stories/STORY-012-mvp-app-shell.md": {
@@ -255,8 +255,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/main.tsx": {
-    "mtime": 1782420565.7160835,
-    "ast_hash": "f883f53fe004c86b15fd9c322534ea10",
+    "mtime": 1782421501.1719158,
+    "ast_hash": "41cde93831b094a86c2865f4b9fe12e2",
     "semantic_hash": ""
   },
   "apps/web/tailwind.config.ts": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "docker-compose.yml": {
-    "mtime": 1782416779.3902864,
-    "ast_hash": "8d8057360cc8d93acaed06a634e84316",
+    "mtime": 1782421386.7046964,
+    "ast_hash": "f0ace6992d8d5229eb78d1f29ac52ec4",
     "semantic_hash": ""
   },
   "docs/deployment.md": {

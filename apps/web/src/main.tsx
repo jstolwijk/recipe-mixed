@@ -937,24 +937,24 @@ function App() {
   }
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <section className="mx-auto grid w-full max-w-7xl gap-6 px-4 py-5 sm:px-6 lg:grid-cols-[280px_minmax(0,1fr)] lg:px-8">
-        <aside className="space-y-4 lg:sticky lg:top-5 lg:self-start">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,hsl(var(--primary)/0.10),transparent_34rem),linear-gradient(180deg,hsl(var(--muted)/0.65),hsl(var(--background))_22rem)] text-foreground">
+      <section className="mx-auto grid w-full max-w-7xl gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[272px_minmax(0,1fr)] lg:px-8">
+        <aside className="space-y-4 lg:sticky lg:top-6 lg:self-start">
           <div className="flex items-center gap-3">
-            <div className="grid h-11 w-11 place-items-center rounded-md bg-primary text-primary-foreground">
+            <div className="grid h-12 w-12 place-items-center rounded-lg bg-primary text-primary-foreground shadow-lg shadow-primary/20">
               <ChefHat aria-hidden="true" className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-sm font-semibold uppercase text-accent">Recipe Mixer</p>
-              <h1 className="text-2xl font-black leading-tight">Remix studio</h1>
+              <p className="text-xs font-bold uppercase tracking-wide text-primary">Recipe Mixer</p>
+              <h1 className="text-2xl font-black leading-tight tracking-tight">Remix studio</h1>
             </div>
           </div>
 
-          <Card>
+          <Card className="border-border/70 bg-card/95 shadow-sm">
             <CardHeader className="p-4">
               <CardTitle className="text-base">Flow</CardTitle>
             </CardHeader>
-            <CardContent className="grid gap-3 p-4 pt-0">
+            <CardContent className="grid gap-2 p-4 pt-0">
               {stepLabels.map((item, index) => {
                 const isActive = item.key === step || (item.key === "saved" && savedCurrent);
                 const isComplete =
@@ -965,11 +965,11 @@ function App() {
                   (item.key === "saved" && savedCurrent);
 
                 return (
-                  <div className="flex items-center gap-3" key={item.key}>
+                  <div className="flex items-center gap-3 rounded-md px-1 py-1.5" key={item.key}>
                     <div
-                      className={`grid h-8 w-8 shrink-0 place-items-center rounded-md border text-sm font-bold ${
+                      className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border text-sm font-bold transition-colors ${
                         isActive || isComplete
-                          ? "border-primary bg-primary text-primary-foreground"
+                          ? "border-primary bg-primary text-primary-foreground shadow-sm"
                           : "border-border bg-card text-muted-foreground"
                       }`}
                     >
@@ -982,7 +982,7 @@ function App() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border-border/70 bg-card/95 shadow-sm">
             <CardHeader className="p-4">
               <CardTitle className="flex items-center gap-2 text-base">
                 <History aria-hidden="true" className="h-4 w-4" />
@@ -993,7 +993,7 @@ function App() {
               {savedRemixes.length ? (
                 savedRemixes.map((saved) => (
                   <button
-                    className="rounded-md border bg-paper p-3 text-left text-sm hover:bg-muted"
+                    className="rounded-md border bg-background p-3 text-left text-sm transition-colors hover:bg-muted"
                     key={saved.id}
                     onClick={() => openSaved(saved)}
                     type="button"
@@ -1010,24 +1010,41 @@ function App() {
         </aside>
 
         <div className="grid gap-5">
-          <Card>
-            <CardHeader className="p-4 sm:p-5">
-              <CardTitle className="text-xl font-black sm:text-2xl">Start with recipe already trusted</CardTitle>
+          <Card className="overflow-hidden border-border/70 bg-card/95 shadow-xl shadow-slate-200/60">
+            <CardHeader className="border-b bg-muted/35 p-4 sm:p-6">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-primary">Source recipe</p>
+                  <CardTitle className="mt-1 text-2xl font-black tracking-tight sm:text-3xl">
+                    Start from a recipe that already works
+                  </CardTitle>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+                    Paste a trusted recipe, set constraints, then review exactly what changed before saving.
+                  </p>
+                </div>
+                <div className="grid w-full min-w-0 grid-cols-1 gap-2 rounded-lg border bg-background p-2 text-center shadow-sm sm:grid-cols-3 lg:w-[23rem]">
+                  <Metric label="Words" value={recipeWordCount.toString()} />
+                  <Metric label="Time" value={formatMinutes(settings.timeLimit)} />
+                  <Metric label="Mode" value={direction.label} />
+                </div>
+              </div>
             </CardHeader>
-            <CardContent className="p-4 pt-0 sm:p-5 sm:pt-0">
+            <CardContent className="p-4 sm:p-6">
               <form className="grid gap-5" onSubmit={startRemix}>
-                <div className="flex flex-wrap gap-2">
+                <div className="inline-flex w-fit rounded-lg border bg-muted p-1">
                   <Button
+                    className="h-9"
                     onClick={() => setSourceMode("paste")}
                     type="button"
-                    variant={sourceMode === "paste" ? "default" : "outline"}
+                    variant={sourceMode === "paste" ? "default" : "ghost"}
                   >
                     Paste
                   </Button>
                   <Button
+                    className="h-9"
                     onClick={() => setSourceMode("link")}
                     type="button"
-                    variant={sourceMode === "link" ? "default" : "outline"}
+                    variant={sourceMode === "link" ? "default" : "ghost"}
                   >
                     Link
                   </Button>
@@ -1055,7 +1072,7 @@ function App() {
                 <div className="grid gap-2">
                   <Label htmlFor="recipe">Original recipe</Label>
                   <Textarea
-                    className="min-h-64 resize-y bg-paper text-base leading-relaxed"
+                    className="min-h-64 resize-y bg-background text-base leading-relaxed shadow-inner"
                     id="recipe"
                     onChange={(event) => setRecipeText(event.target.value)}
                     value={recipeText}
@@ -1069,7 +1086,7 @@ function App() {
                       onValueChange={(value) => updateSettings({ direction: value as RemixDirection })}
                       value={settings.direction}
                     >
-                      <SelectTrigger className="h-11 bg-white" id="direction">
+                      <SelectTrigger className="h-11 bg-background" id="direction">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -1085,7 +1102,7 @@ function App() {
                   <div className="grid gap-2">
                     <Label htmlFor="skill-level">Cook profile</Label>
                     <Select onValueChange={(value) => updateSettings({ skillLevel: value })} value={settings.skillLevel}>
-                      <SelectTrigger className="h-11 bg-white" id="skill-level">
+                      <SelectTrigger className="h-11 bg-background" id="skill-level">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -1113,7 +1130,7 @@ function App() {
                   <div className="grid gap-2">
                     <Label htmlFor="spice-level">Spice</Label>
                     <Select onValueChange={(value) => updateSettings({ spiceLevel: value })} value={settings.spiceLevel}>
-                      <SelectTrigger className="h-11 bg-white" id="spice-level">
+                      <SelectTrigger className="h-11 bg-background" id="spice-level">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -1129,7 +1146,7 @@ function App() {
                   <div className="grid gap-2">
                     <Label htmlFor="diet">Diet</Label>
                     <Select onValueChange={(value) => updateSettings({ diet: value })} value={settings.diet}>
-                      <SelectTrigger className="h-11 bg-white" id="diet">
+                      <SelectTrigger className="h-11 bg-background" id="diet">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -1155,11 +1172,13 @@ function App() {
 
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex flex-wrap gap-2">
-                    <Badge variant="secondary">{direction.label}</Badge>
+                    <Badge className="bg-primary/10 text-primary hover:bg-primary/10" variant="secondary">
+                      {direction.label}
+                    </Badge>
                     <Badge variant="outline">{settings.skillLevel}</Badge>
                     <Badge variant="outline">{formatMinutes(settings.timeLimit)}</Badge>
                   </div>
-                  <Button className="h-11 w-full sm:w-auto" disabled={isBusy} type="submit">
+                  <Button className="h-11 w-full shadow-lg shadow-primary/20 sm:w-auto" disabled={isBusy} type="submit">
                     {step === "generating" ? <LoaderCircle aria-hidden="true" className="animate-spin" /> : <WandSparkles aria-hidden="true" />}
                     {step === "generating" ? "Mixing" : "Generate remix"}
                   </Button>
@@ -1178,17 +1197,17 @@ function App() {
           ) : null}
 
           {status ? (
-            <div className="rounded-md border bg-card p-3 text-sm font-medium text-primary" role="status">
+            <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-sm font-medium text-primary" role="status">
               {status}
             </div>
           ) : null}
 
           <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
-            <Card>
-              <CardHeader className="p-4 sm:p-5">
+            <Card className="overflow-hidden border-border/70 bg-card/95 shadow-lg shadow-slate-200/50">
+              <CardHeader className="border-b bg-background p-4 sm:p-5">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="text-sm font-semibold uppercase text-accent">Remix result</p>
+                    <p className="text-xs font-bold uppercase tracking-wide text-primary">Remix result</p>
                     <CardTitle className="mt-1 text-xl font-black sm:text-2xl">
                       {remix ? remix.title : "Ready when recipe is"}
                     </CardTitle>
@@ -1200,7 +1219,7 @@ function App() {
               </CardHeader>
               <CardContent className="grid gap-5 p-4 pt-0 sm:p-5 sm:pt-0">
                 {step === "generating" || step === "importing" ? (
-                  <div className="grid min-h-80 place-items-center rounded-md border border-dashed bg-muted/60 p-6 text-center">
+                  <div className="grid min-h-80 place-items-center rounded-lg border border-dashed bg-muted/60 p-6 text-center">
                     <div className="grid justify-items-center gap-3">
                       <LoaderCircle aria-hidden="true" className="h-8 w-8 animate-spin text-primary" />
                       <div>
@@ -1213,10 +1232,19 @@ function App() {
                   </div>
                 ) : remix ? (
                   <>
-                    <p className="text-base leading-7 text-muted-foreground">{remix.summary}</p>
+                    <div className="grid gap-3 rounded-lg border bg-muted/35 p-4">
+                      <div className="flex flex-wrap gap-2">
+                        <Badge className="bg-primary/10 text-primary hover:bg-primary/10" variant="secondary">
+                          {remix.directionLabel}
+                        </Badge>
+                        <Badge variant="outline">{remix.servings}</Badge>
+                        <Badge variant="outline">{remix.timing}</Badge>
+                      </div>
+                      <p className="text-base leading-7 text-muted-foreground">{remix.summary}</p>
+                    </div>
 
                     <div className="grid gap-4 md:grid-cols-2">
-                      <div className="rounded-md border bg-muted/40 p-4">
+                      <div className="rounded-lg border bg-background p-4 shadow-sm">
                         <h3 className="font-bold">Ingredients</h3>
                         <ul className="mt-3 grid gap-2 text-sm">
                           {remix.ingredients.map((ingredient) => (
@@ -1228,7 +1256,7 @@ function App() {
                         </ul>
                       </div>
 
-                      <div className="rounded-md border bg-muted/40 p-4">
+                      <div className="rounded-lg border bg-background p-4 shadow-sm">
                         <h3 className="font-bold">Cook plan</h3>
                         <ol className="mt-3 grid gap-2 text-sm">
                           {remix.steps.map((recipeStep, index) => (
@@ -1243,7 +1271,7 @@ function App() {
                       </div>
                     </div>
 
-                    <div className="rounded-md border bg-paper p-4">
+                    <div className="rounded-lg border bg-muted/35 p-4">
                       <h3 className="font-bold">Notes</h3>
                       <ul className="mt-3 grid gap-2 text-sm text-muted-foreground">
                         {remix.notes.map((note) => (
@@ -1268,7 +1296,7 @@ function App() {
                     </div>
                   </>
                 ) : (
-                  <div className="grid min-h-80 place-items-center rounded-md border border-dashed bg-muted/60 p-6 text-center">
+                  <div className="grid min-h-80 place-items-center rounded-lg border border-dashed bg-muted/60 p-6 text-center">
                     <div className="grid max-w-sm justify-items-center gap-3">
                       <ArrowRight aria-hidden="true" className="h-8 w-8 text-primary" />
                       <h2 className="text-lg font-bold">Paste or import, choose direction, remix</h2>
@@ -1282,7 +1310,7 @@ function App() {
             </Card>
 
             <div className="grid gap-5">
-              <Card>
+              <Card className="border-border/70 bg-card/95 shadow-sm">
                 <CardHeader className="p-4 sm:p-5">
                   <CardTitle className="text-lg font-black">Adjust remix</CardTitle>
                 </CardHeader>
@@ -1321,7 +1349,7 @@ function App() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="border-border/70 bg-card/95 shadow-sm">
                 <CardHeader className="p-4 sm:p-5">
                   <CardTitle className="text-lg font-black">Cooking sanity</CardTitle>
                 </CardHeader>
@@ -1333,12 +1361,12 @@ function App() {
                       level: "watch" as const
                     }
                   ]).map((note) => (
-                    <div className="rounded-md border bg-paper p-3 text-sm" key={note.label}>
+                    <div className="rounded-lg border bg-background p-3 text-sm shadow-sm" key={note.label}>
                       <div className="flex items-center gap-2 font-bold">
                         {note.level === "ok" ? (
                           <CheckCircle2 aria-hidden="true" className="h-4 w-4 text-primary" />
                         ) : (
-                          <AlertTriangle aria-hidden="true" className="h-4 w-4 text-accent" />
+                          <AlertTriangle aria-hidden="true" className="h-4 w-4 text-saffron" />
                         )}
                         {note.label}
                       </div>
@@ -1349,11 +1377,11 @@ function App() {
               </Card>
             </div>
 
-            <Card className="xl:col-span-2">
-              <CardHeader className="p-4 sm:p-5">
+            <Card className="border-border/70 bg-card/95 shadow-sm xl:col-span-2">
+              <CardHeader className="border-b bg-muted/35 p-4 sm:p-5">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="text-sm font-semibold uppercase text-accent">Compare</p>
+                    <p className="text-xs font-bold uppercase tracking-wide text-primary">Compare</p>
                     <CardTitle className="mt-1 text-lg font-black">Original vs remix</CardTitle>
                   </div>
                   <div className="flex flex-wrap gap-2 md:hidden">
@@ -1392,6 +1420,15 @@ function App() {
   );
 }
 
+function Metric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="min-w-0 overflow-hidden px-1 py-1 sm:px-2">
+      <p className="text-[0.68rem] font-bold uppercase tracking-wide text-muted-foreground">{label}</p>
+      <p className="mt-0.5 break-words text-xs font-black leading-tight sm:text-sm">{value}</p>
+    </div>
+  );
+}
+
 function ComparePanel({
   active,
   children,
@@ -1402,7 +1439,7 @@ function ComparePanel({
   title: string;
 }) {
   return (
-    <div className={`${active ? "grid" : "hidden"} gap-3 rounded-md border bg-paper p-4 md:grid`}>
+    <div className={`${active ? "grid" : "hidden"} gap-3 rounded-lg border bg-background p-4 shadow-sm md:grid`}>
       <h3 className="font-bold">{title}</h3>
       {children}
     </div>
