@@ -1,20 +1,20 @@
-.PHONY: help check lint test build setup dev compose-build deploy deploy-api deploy-web backup
+.PHONY: help check lint test build setup dev web-deps compose-build deploy deploy-api deploy-web backup
 
 .DEFAULT_GOAL := check
 
 help:
 	@printf '%s\n' \
 		'Targets:' \
-		'  make check          Validate repo planning files' \
-		'  make lint           Run current lint checks' \
-		'  make test           Run current test checks' \
-		'  make build          Run current build checks' \
-		'  make setup          Print setup status' \
-		'  make dev            Print current dev entrypoint' \
-		'  make compose-build  Build Docker images once scaffold exists' \
-		'  make deploy         Deploy all once scaffold exists' \
-		'  make deploy-api     Deploy API once scaffold exists' \
-		'  make deploy-web     Deploy web once scaffold exists' \
+		'  make check          Validate repo planning files and scaffold files' \
+		'  make lint           Run frontend typecheck and backend lint checks' \
+		'  make test           Run frontend and backend tests' \
+		'  make build          Build frontend and backend artifacts' \
+		'  make setup          Install/fetch local dependencies' \
+		'  make dev            Start the local Docker Compose stack' \
+		'  make compose-build  Build Docker images' \
+		'  make deploy         Deploy all services' \
+		'  make deploy-api     Deploy only the backend' \
+		'  make deploy-web     Deploy only the frontend' \
 		'  make backup         Backup SQLite once implemented'
 
 check:
@@ -24,34 +24,48 @@ check:
 	@test -d issues/epics
 	@test -d issues/stories
 	@test -d issues/templates
+	@test -f apps/web/package.json
+	@test -f crates/api/Cargo.toml
+	@test -f docker-compose.yml
+	@test -f Dockerfile.api
+	@test -f Dockerfile.web
+	@test -f deploy/Caddyfile
 	@printf '%s\n' 'check ok'
 
-lint: check
+lint: check web-deps
+	npm --prefix apps/web run lint
+	cargo fmt --all --check
+	cargo clippy --workspace --all-targets -- -D warnings
 
-test: check
+test: check web-deps
+	npm --prefix apps/web run test
+	cargo test --workspace
 
-build: check
+build: check web-deps
+	npm --prefix apps/web run build
+	cargo build --workspace
 
 setup:
-	@printf '%s\n' 'setup ok: docs-only repo; scaffold pending STORY-000 approval'
+	npm --prefix apps/web install
+	cargo fetch
+	@printf '%s\n' 'setup ok'
 
 dev:
-	@printf '%s\n' 'dev entrypoint pending app scaffold; read issues/README.md'
+	docker compose up --build
+
+web-deps:
+	@test -d apps/web/node_modules || npm --prefix apps/web ci
 
 compose-build:
-	@test -f docker-compose.yml || { printf '%s\n' 'docker-compose.yml missing; scaffold pending'; exit 1; }
 	docker compose build
 
 deploy:
-	@test -x scripts/deploy.sh || { printf '%s\n' 'scripts/deploy.sh missing; deployment pending'; exit 1; }
 	scripts/deploy.sh all
 
 deploy-api:
-	@test -x scripts/deploy.sh || { printf '%s\n' 'scripts/deploy.sh missing; deployment pending'; exit 1; }
 	scripts/deploy.sh api
 
 deploy-web:
-	@test -x scripts/deploy.sh || { printf '%s\n' 'scripts/deploy.sh missing; deployment pending'; exit 1; }
 	scripts/deploy.sh web
 
 backup:

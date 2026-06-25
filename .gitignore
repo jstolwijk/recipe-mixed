@@ -1,0 +1,11 @@
+node_modules/
+dist/
+target/
+.env
+.env.*
+!.env.example
+apps/web/node_modules/
+apps/web/dist/
+data/*
+!data/.gitkeep
+
