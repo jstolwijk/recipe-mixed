@@ -1,0 +1,232 @@
+{
+  ".agents/skills/caveman-compress/scripts/__init__.py": {
+    "mtime": 1782413677.505343,
+    "ast_hash": "4bfea67395a7ba04f363df51355d1ef8",
+    "semantic_hash": "4bfea67395a7ba04f363df51355d1ef8"
+  },
+  ".agents/skills/caveman-compress/scripts/__main__.py": {
+    "mtime": 1782413677.5053742,
+    "ast_hash": "746aff14c3a098a28fe9d01d54f174a9",
+    "semantic_hash": "746aff14c3a098a28fe9d01d54f174a9"
+  },
+  ".agents/skills/caveman-compress/scripts/benchmark.py": {
+    "mtime": 1782413677.5054746,
+    "ast_hash": "b4a8fd8070777a15f1f183d7c9992dcd",
+    "semantic_hash": "b4a8fd8070777a15f1f183d7c9992dcd"
+  },
+  ".agents/skills/caveman-compress/scripts/cli.py": {
+    "mtime": 1782413677.5053756,
+    "ast_hash": "993604200cad4bb12bdb2efcdb45fcf5",
+    "semantic_hash": "993604200cad4bb12bdb2efcdb45fcf5"
+  },
+  ".agents/skills/caveman-compress/scripts/compress.py": {
+    "mtime": 1782413677.5055475,
+    "ast_hash": "3ba8e48116e0a534d997f40e2da7f241",
+    "semantic_hash": "3ba8e48116e0a534d997f40e2da7f241"
+  },
+  ".agents/skills/caveman-compress/scripts/detect.py": {
+    "mtime": 1782413677.505545,
+    "ast_hash": "b0fe8099be4fae2bade0de8253c950f1",
+    "semantic_hash": "b0fe8099be4fae2bade0de8253c950f1"
+  },
+  ".agents/skills/caveman-compress/scripts/validate.py": {
+    "mtime": 1782413677.5056698,
+    "ast_hash": "b4f283bc53e5d352fb0120827fd4fafa",
+    "semantic_hash": "b4f283bc53e5d352fb0120827fd4fafa"
+  },
+  "skills-lock.json": {
+    "mtime": 1782413677.5474002,
+    "ast_hash": "a7e6136d526c727568d7d7bd09918549",
+    "semantic_hash": "a7e6136d526c727568d7d7bd09918549"
+  },
+  ".agents/skills/cavecrew/README.md": {
+    "mtime": 1782413677.5024488,
+    "ast_hash": "d24b6cd745e2fe7136a236e063717376",
+    "semantic_hash": "d24b6cd745e2fe7136a236e063717376"
+  },
+  ".agents/skills/cavecrew/SKILL.md": {
+    "mtime": 1782413677.5024612,
+    "ast_hash": "f184873cd9c507fa872cc86fd36722e3",
+    "semantic_hash": "f184873cd9c507fa872cc86fd36722e3"
+  },
+  ".agents/skills/caveman-commit/README.md": {
+    "mtime": 1782413677.5038564,
+    "ast_hash": "15f57347c5b5449b79fdf24fdab21f31",
+    "semantic_hash": "15f57347c5b5449b79fdf24fdab21f31"
+  },
+  ".agents/skills/caveman-commit/SKILL.md": {
+    "mtime": 1782413677.503854,
+    "ast_hash": "1262c2156cd81379fc011d538728079d",
+    "semantic_hash": "1262c2156cd81379fc011d538728079d"
+  },
+  ".agents/skills/caveman-compress/README.md": {
+    "mtime": 1782413677.505045,
+    "ast_hash": "3bda4de7432953bceb7f230da97f2c12",
+    "semantic_hash": "3bda4de7432953bceb7f230da97f2c12"
+  },
+  ".agents/skills/caveman-compress/SECURITY.md": {
+    "mtime": 1782413677.5050519,
+    "ast_hash": "ab7d04be07bb9b8e851fb2758040432b",
+    "semantic_hash": "ab7d04be07bb9b8e851fb2758040432b"
+  },
+  ".agents/skills/caveman-compress/SKILL.md": {
+    "mtime": 1782413677.505095,
+    "ast_hash": "7f0c9f11595a612a536954c6be767910",
+    "semantic_hash": "7f0c9f11595a612a536954c6be767910"
+  },
+  ".agents/skills/caveman-help/README.md": {
+    "mtime": 1782413677.5062447,
+    "ast_hash": "9c9cf8de78df2a8831c57d6bc88d942b",
+    "semantic_hash": "9c9cf8de78df2a8831c57d6bc88d942b"
+  },
+  ".agents/skills/caveman-help/SKILL.md": {
+    "mtime": 1782413677.5062635,
+    "ast_hash": "5dae4d1aebe90b61b0024f037a991bbf",
+    "semantic_hash": "5dae4d1aebe90b61b0024f037a991bbf"
+  },
+  ".agents/skills/caveman-review/README.md": {
+    "mtime": 1782413677.506772,
+    "ast_hash": "ae3bdc81125037690fc50504e2917c83",
+    "semantic_hash": "ae3bdc81125037690fc50504e2917c83"
+  },
+  ".agents/skills/caveman-review/SKILL.md": {
+    "mtime": 1782413677.5067844,
+    "ast_hash": "fbb47ffb83198a1ed37a453417e691e2",
+    "semantic_hash": "fbb47ffb83198a1ed37a453417e691e2"
+  },
+  ".agents/skills/caveman-stats/README.md": {
+    "mtime": 1782413677.5072627,
+    "ast_hash": "ad1001beaabf7ab16a0113b2efc8b720",
+    "semantic_hash": "ad1001beaabf7ab16a0113b2efc8b720"
+  },
+  ".agents/skills/caveman-stats/SKILL.md": {
+    "mtime": 1782413677.5072637,
+    "ast_hash": "5c195635a9349369df34699f8d3b3445",
+    "semantic_hash": "5c195635a9349369df34699f8d3b3445"
+  },
+  ".agents/skills/caveman/README.md": {
+    "mtime": 1782413677.5031717,
+    "ast_hash": "72a5c06aa99126d55573e87721c37ab4",
+    "semantic_hash": "72a5c06aa99126d55573e87721c37ab4"
+  },
+  ".agents/skills/caveman/SKILL.md": {
+    "mtime": 1782413677.5031698,
+    "ast_hash": "893def771b2c8653b3ee9ea781d6d614",
+    "semantic_hash": "893def771b2c8653b3ee9ea781d6d614"
+  },
+  "issues/README.md": {
+    "mtime": 1782413128.0379837,
+    "ast_hash": "8c145d69e6e40cb8d39d63f85a24f398",
+    "semantic_hash": "8c145d69e6e40cb8d39d63f85a24f398"
+  },
+  "issues/epics/EPIC-001-recipe-input.md": {
+    "mtime": 1782412194.244804,
+    "ast_hash": "3d5d81a12dcaf1376340c4d81b09a971",
+    "semantic_hash": "3d5d81a12dcaf1376340c4d81b09a971"
+  },
+  "issues/epics/EPIC-002-remix-engine.md": {
+    "mtime": 1782412194.3813715,
+    "ast_hash": "1bb1437ab5ff25916ccf368bf722a7a5",
+    "semantic_hash": "1bb1437ab5ff25916ccf368bf722a7a5"
+  },
+  "issues/epics/EPIC-003-trust-and-safety.md": {
+    "mtime": 1782412194.517575,
+    "ast_hash": "921ea22ccefceb98de552497daae6ae9",
+    "semantic_hash": "921ea22ccefceb98de552497daae6ae9"
+  },
+  "issues/epics/EPIC-004-remix-experience.md": {
+    "mtime": 1782412194.6668675,
+    "ast_hash": "e74591ce1187968c74c5bc4068487ee6",
+    "semantic_hash": "e74591ce1187968c74c5bc4068487ee6"
+  },
+  "issues/epics/EPIC-005-saving-and-sharing.md": {
+    "mtime": 1782412194.8166301,
+    "ast_hash": "1acd3e4a36dbbb6c48ac0aeae00cc464",
+    "semantic_hash": "1acd3e4a36dbbb6c48ac0aeae00cc464"
+  },
+  "issues/epics/EPIC-006-mvp-foundation.md": {
+    "mtime": 1782413128.174622,
+    "ast_hash": "e2e1c775b3d2eb8d49f7e70292d1e4cb",
+    "semantic_hash": "e2e1c775b3d2eb8d49f7e70292d1e4cb"
+  },
+  "issues/stories/STORY-000-tech-stack-and-scaffolding.md": {
+    "mtime": 1782413231.814032,
+    "ast_hash": "46102466845754625c19592e19132de8",
+    "semantic_hash": "46102466845754625c19592e19132de8"
+  },
+  "issues/stories/STORY-001-paste-recipe-text.md": {
+    "mtime": 1782412195.2086372,
+    "ast_hash": "75760e9a53896768daab277948171a0b",
+    "semantic_hash": "75760e9a53896768daab277948171a0b"
+  },
+  "issues/stories/STORY-002-import-recipe-link.md": {
+    "mtime": 1782412195.3560917,
+    "ast_hash": "d174e0f70e48be699de6f14c80cb41fa",
+    "semantic_hash": "d174e0f70e48be699de6f14c80cb41fa"
+  },
+  "issues/stories/STORY-003-normalize-recipe-structure.md": {
+    "mtime": 1782412195.5018675,
+    "ast_hash": "b143a1c208b4950b0ca234b1f1dcdbd6",
+    "semantic_hash": "b143a1c208b4950b0ca234b1f1dcdbd6"
+  },
+  "issues/stories/STORY-004-select-remix-direction.md": {
+    "mtime": 1782412195.643376,
+    "ast_hash": "f90946f571fd6ca26444e3b568abfe2e",
+    "semantic_hash": "f90946f571fd6ca26444e3b568abfe2e"
+  },
+  "issues/stories/STORY-005-generate-remixed-recipe.md": {
+    "mtime": 1782412195.7880979,
+    "ast_hash": "2e416ee4adb18e22d4cf2f64736fe19d",
+    "semantic_hash": "2e416ee4adb18e22d4cf2f64736fe19d"
+  },
+  "issues/stories/STORY-006-show-what-changed.md": {
+    "mtime": 1782412195.9270468,
+    "ast_hash": "385299767f16f4e1aa7b80ebd0d2789d",
+    "semantic_hash": "385299767f16f4e1aa7b80ebd0d2789d"
+  },
+  "issues/stories/STORY-007-cooking-sanity-check.md": {
+    "mtime": 1782412196.063466,
+    "ast_hash": "fad1dbf9404d95ea45587033479d2d4d",
+    "semantic_hash": "fad1dbf9404d95ea45587033479d2d4d"
+  },
+  "issues/stories/STORY-008-remix-adjustments.md": {
+    "mtime": 1782412196.2023132,
+    "ast_hash": "294fdcd9416d529e5000ceb7996a7bf2",
+    "semantic_hash": "294fdcd9416d529e5000ceb7996a7bf2"
+  },
+  "issues/stories/STORY-009-compare-original-and-remix.md": {
+    "mtime": 1782412196.337583,
+    "ast_hash": "cacef6e1eade10c6329a7e990d6d28af",
+    "semantic_hash": "cacef6e1eade10c6329a7e990d6d28af"
+  },
+  "issues/stories/STORY-010-save-remix.md": {
+    "mtime": 1782412196.4775481,
+    "ast_hash": "249825a763dea9ae664c87140be09084",
+    "semantic_hash": "249825a763dea9ae664c87140be09084"
+  },
+  "issues/stories/STORY-011-share-or-copy-remix.md": {
+    "mtime": 1782412196.6470811,
+    "ast_hash": "46e118b21269a01415856f9732cc3bd6",
+    "semantic_hash": "46e118b21269a01415856f9732cc3bd6"
+  },
+  "issues/stories/STORY-012-mvp-app-shell.md": {
+    "mtime": 1782412196.7875612,
+    "ast_hash": "044d6d2f87faa60dfe88b1eb30fcfed3",
+    "semantic_hash": "044d6d2f87faa60dfe88b1eb30fcfed3"
+  },
+  "issues/stories/STORY-013-sqlite-backup-strategy.md": {
+    "mtime": 1782413128.440935,
+    "ast_hash": "143ca7d875c5de50c448f51586774090",
+    "semantic_hash": "143ca7d875c5de50c448f51586774090"
+  },
+  "issues/templates/epic.md": {
+    "mtime": 1782412193.8680105,
+    "ast_hash": "53fd57ee24e9f5b61d43e51823f9cd91",
+    "semantic_hash": "53fd57ee24e9f5b61d43e51823f9cd91"
+  },
+  "issues/templates/story.md": {
+    "mtime": 1782412194.0116227,
+    "ast_hash": "09f1ee62fc06be19d8a2a6052f0f3220",
+    "semantic_hash": "09f1ee62fc06be19d8a2a6052f0f3220"
+  }
+}
