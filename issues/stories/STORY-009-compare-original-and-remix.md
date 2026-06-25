@@ -1,6 +1,6 @@
 # STORY-009: Compare Original And Remix
 
-Status: Backlog
+Status: Done
 
 ## User Story
 

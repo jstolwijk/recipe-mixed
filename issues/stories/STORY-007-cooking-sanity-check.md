@@ -1,6 +1,6 @@
 # STORY-007: Cooking Sanity Check
 
-Status: Backlog
+Status: Done
 
 ## User Story
 

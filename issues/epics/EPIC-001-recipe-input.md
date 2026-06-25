@@ -1,6 +1,6 @@
 # EPIC-001: Recipe Input
 
-Status: Backlog
+Status: Done
 
 ## Goal
 

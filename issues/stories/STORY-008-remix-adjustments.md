@@ -1,6 +1,6 @@
 # STORY-008: Remix Adjustments
 
-Status: Backlog
+Status: Done
 
 ## User Story
 

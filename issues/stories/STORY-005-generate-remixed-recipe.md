@@ -1,6 +1,6 @@
 # STORY-005: Generate Remixed Recipe
 
-Status: Backlog
+Status: Done
 
 ## User Story
 

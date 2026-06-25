@@ -1,6 +1,6 @@
 # STORY-004: Select Remix Direction
 
-Status: Backlog
+Status: Done
 
 ## User Story
 

@@ -1,6 +1,6 @@
 # EPIC-006: MVP Foundation
 
-Status: Backlog
+Status: Done
 
 ## Goal
 

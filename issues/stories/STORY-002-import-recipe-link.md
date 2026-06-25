@@ -1,6 +1,6 @@
 # STORY-002: Import Recipe Link
 
-Status: Backlog
+Status: Done
 
 ## User Story
 

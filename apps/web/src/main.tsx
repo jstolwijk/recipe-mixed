@@ -98,6 +98,69 @@ type SavedRemix = {
   sharePath: string;
 };
 
+type ApiRecipe = {
+  title: string | null;
+  ingredients: string[];
+  steps: string[];
+  servings: string | null;
+  time: string | null;
+  source: {
+    kind: string;
+    url: string | null;
+    attribution: string | null;
+  };
+  notes: string[];
+  raw_text: string | null;
+};
+
+type ApiRemixSettings = {
+  direction: string;
+  diet: string | null;
+  time_limit_minutes: number | null;
+  difficulty: string | null;
+  spice_level: string | null;
+  pantry_ingredients: string[];
+};
+
+type ApiRemixResponse = {
+  recipe: ApiRecipe;
+  settings: ApiRemixSettings;
+  remix: {
+    title: string;
+    servings: string | null;
+    time: string | null;
+    ingredients: string[];
+    steps: string[];
+    notes: string[];
+  };
+  changes: Array<{
+    label: string;
+    target: string;
+    summary: string;
+  }>;
+  sanity_warnings: Array<{
+    severity: string;
+    message: string;
+  }>;
+  why_this_works: string;
+  copy_text: string;
+  share_payload: {
+    title: string;
+    source_url: string | null;
+    direction: string;
+    copy_text: string;
+  };
+};
+
+type ApiSavedRemix = {
+  id: string;
+  name: string;
+  source_title: string | null;
+  direction: string;
+  created_at: string;
+  payload: ApiRemixResponse;
+};
+
 const defaultRecipe = `Creamy tomato pasta
 
 Servings: 4
@@ -297,6 +360,165 @@ function normalizeRecipe(text: string, source: SourceMode, sourceUrl: string | n
   };
 }
 
+function recipeToApi(recipe: Recipe): ApiRecipe {
+  return {
+    title: recipe.title || null,
+    ingredients: recipe.ingredients,
+    steps: recipe.steps,
+    servings: recipe.servings === "Not specified" ? null : recipe.servings,
+    time: recipe.timing === "Not specified" ? null : recipe.timing,
+    source: {
+      kind: recipe.source === "link" ? "url" : "text",
+      url: recipe.sourceUrl,
+      attribution: null
+    },
+    notes: recipe.notes,
+    raw_text: recipe.rawText
+  };
+}
+
+function recipeTextFromApi(recipe: ApiRecipe) {
+  return recipe.raw_text ?? `${recipe.title ?? "Untitled recipe"}
+
+Servings: ${recipe.servings ?? "Not specified"}
+Total time: ${recipe.time ?? "Not specified"}
+
+Ingredients
+${recipe.ingredients.map((ingredient) => `- ${ingredient}`).join("\n")}
+
+Steps
+${recipe.steps.map((step, index) => `${index + 1}. ${step}`).join("\n")}
+
+Notes
+${recipe.notes.map((note) => `- ${note}`).join("\n")}`;
+}
+
+function recipeFromApi(recipe: ApiRecipe, fallbackUrl: string | null): Recipe {
+  const rawText = recipeTextFromApi(recipe);
+  const sourceUrl = recipe.source.url ?? fallbackUrl;
+  const source: SourceMode = recipe.source.kind === "url" || sourceUrl ? "link" : "paste";
+  const missingFields = [
+    recipe.title ? "" : "title",
+    recipe.ingredients.length ? "" : "ingredients",
+    recipe.steps.length ? "" : "steps",
+    recipe.servings ? "" : "servings",
+    recipe.time ? "" : "timing"
+  ].filter(Boolean);
+
+  return {
+    source,
+    sourceUrl,
+    rawText,
+    title: recipe.title ?? (sourceUrl ? new URL(sourceUrl).hostname.replace(/^www\./, "") : "Untitled recipe"),
+    ingredients: recipe.ingredients,
+    steps: recipe.steps,
+    servings: recipe.servings ?? "Not specified",
+    timing: recipe.time ?? "Not specified",
+    notes: recipe.notes,
+    missingFields
+  };
+}
+
+function settingsToApi(settings: RemixSettings): ApiRemixSettings {
+  const pantry = settings.pantryItems
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+  const adjustments = [
+    ...settings.adjustments,
+    settings.customAdjustment.trim()
+  ].filter(Boolean);
+
+  return {
+    direction: directionCopy[settings.direction].label,
+    diet: settings.diet === "No extra diet" ? null : settings.diet,
+    time_limit_minutes: Number.parseInt(settings.timeLimit, 10) || null,
+    difficulty: settings.skillLevel,
+    spice_level: settings.spiceLevel,
+    pantry_ingredients: [...pantry, ...adjustments]
+  };
+}
+
+function changeKind(value: string): ChangeKind {
+  return value === "kept" || value === "changed" || value === "added" || value === "removed" || value === "optional"
+    ? value
+    : "changed";
+}
+
+function changeSection(value: string): RecipeChange["section"] {
+  const target = value.toLowerCase();
+  if (target.includes("ingredient")) {
+    return "ingredient";
+  }
+  if (target.includes("time")) {
+    return "timing";
+  }
+  if (target.includes("note")) {
+    return "note";
+  }
+  return "technique";
+}
+
+function remixFromApi(response: ApiRemixResponse, settings: RemixSettings): RemixResult {
+  const sourceIngredients = new Set(response.recipe.ingredients.map((ingredient) => ingredient.toLowerCase()));
+  const sourceSteps = new Set(response.recipe.steps.map((step) => step.toLowerCase()));
+
+  return {
+    id: crypto.randomUUID(),
+    title: response.remix.title,
+    summary: response.why_this_works,
+    directionLabel: response.settings.direction,
+    servings: response.remix.servings ?? response.recipe.servings ?? "Not specified",
+    timing: response.remix.time ?? response.recipe.time ?? "Flexible timing",
+    ingredients: response.remix.ingredients.map((ingredient) => ({
+      text: ingredient,
+      change: sourceIngredients.has(ingredient.toLowerCase()) ? "kept" : "added"
+    })),
+    steps: response.remix.steps.map((step) => ({
+      text: step,
+      change: sourceSteps.has(step.toLowerCase()) ? "kept" : "changed"
+    })),
+    notes: response.remix.notes.length ? response.remix.notes : [response.why_this_works],
+    changes: response.changes.map((change) => ({
+      kind: changeKind(change.label),
+      section: changeSection(change.target),
+      label: change.target,
+      detail: change.summary
+    })),
+    sanity: response.sanity_warnings.length
+      ? response.sanity_warnings.map((warning) => ({
+          level: warning.severity === "warning" ? "watch" : "ok",
+          label: warning.severity,
+          detail: warning.message
+        }))
+      : [
+          {
+            level: "ok",
+            label: "Basic cookability check passed",
+            detail: "Backend returned structured ingredients, steps, and timing notes."
+          }
+        ],
+    settings,
+    versionNote: "Generated by backend API."
+  };
+}
+
+function savedFromApi(saved: ApiSavedRemix, fallbackSettings: RemixSettings): SavedRemix {
+  const original = recipeFromApi(saved.payload.recipe, saved.payload.recipe.source.url);
+  const remix = remixFromApi(saved.payload, fallbackSettings);
+
+  return {
+    id: saved.id,
+    savedAt: saved.created_at,
+    original,
+    remix: {
+      ...remix,
+      id: saved.id
+    },
+    sharePath: `/api/share/${saved.id}`
+  };
+}
+
 function formatMinutes(value: string) {
   const minutes = Number.parseInt(value, 10);
   return Number.isFinite(minutes) && minutes > 0 ? `${minutes} minutes` : "Flexible timing";
@@ -458,27 +680,21 @@ async function postJson<TResponse>(path: string, payload: unknown): Promise<TRes
 }
 
 async function importRecipeFromUrl(sourceUrl: string): Promise<Recipe> {
-  const apiRecipe = await postJson<Partial<Recipe>>("/api/recipes/import", { url: sourceUrl });
-  if (apiRecipe?.rawText) {
-    return {
-      ...normalizeRecipe(apiRecipe.rawText, "link", sourceUrl),
-      ...apiRecipe,
-      source: "link",
-      sourceUrl
-    };
+  const apiRecipe = await postJson<ApiRecipe>("/api/recipes/import", { url: sourceUrl });
+  if (apiRecipe?.ingredients?.length && apiRecipe?.steps?.length) {
+    return recipeFromApi(apiRecipe, sourceUrl);
   }
 
   return normalizeRecipe(importedFallback, "link", sourceUrl);
 }
 
 async function generateRemix(recipe: Recipe, settings: RemixSettings): Promise<RemixResult> {
-  const apiRemix = await postJson<RemixResult>("/api/remixes", { recipe, settings });
-  if (apiRemix?.title && apiRemix.ingredients?.length && apiRemix.steps?.length) {
-    return {
-      ...apiRemix,
-      settings,
-      sanity: apiRemix.sanity?.length ? apiRemix.sanity : buildSanityNotes(recipe, apiRemix)
-    };
+  const apiRemix = await postJson<ApiRemixResponse>("/api/remixes", {
+    recipe: recipeToApi(recipe),
+    settings: settingsToApi(settings)
+  });
+  if (apiRemix?.remix?.title && apiRemix.remix.ingredients?.length && apiRemix.remix.steps?.length) {
+    return remixFromApi(apiRemix, settings);
   }
 
   return makeLocalRemix(recipe, settings);
@@ -622,12 +838,47 @@ function App() {
     }
   }
 
-  function saveRemix() {
+  async function saveRemix() {
     if (!remix) {
       return;
     }
 
-    const saved: SavedRemix = {
+    const apiPayload = await postJson<ApiSavedRemix>("/api/remixes/save", {
+      name: `${recipe.title} - ${remix.directionLabel}`,
+      remix: {
+        recipe: recipeToApi(recipe),
+        settings: settingsToApi(remix.settings),
+        remix: {
+          title: remix.title,
+          servings: remix.servings === "Not specified" ? null : remix.servings,
+          time: remix.timing === "Flexible timing" ? null : remix.timing,
+          ingredients: remix.ingredients.map((ingredient) => ingredient.text),
+          steps: remix.steps.map((step) => step.text),
+          notes: remix.notes
+        },
+        changes: remix.changes.map((change) => ({
+          label: change.kind,
+          target: change.section,
+          summary: `${change.label}: ${change.detail}`
+        })),
+        sanity_warnings: remix.sanity
+          .filter((note) => note.level !== "ok")
+          .map((note) => ({
+            severity: note.level === "missing" ? "warning" : "note",
+            message: `${note.label}: ${note.detail}`
+          })),
+        why_this_works: remix.summary,
+        copy_text: buildCopyText(recipe, remix),
+        share_payload: {
+          title: remix.title,
+          source_url: recipe.sourceUrl,
+          direction: remix.directionLabel,
+          copy_text: buildCopyText(recipe, remix)
+        }
+      }
+    });
+
+    const saved: SavedRemix = apiPayload ? savedFromApi(apiPayload, remix.settings) : {
       id: crypto.randomUUID(),
       original: recipe,
       remix,
@@ -637,7 +888,7 @@ function App() {
     const nextSaved = [saved, ...savedRemixes.filter((item) => item.remix.id !== remix.id)].slice(0, 8);
     setSavedRemixes(nextSaved);
     window.localStorage.setItem("recipe-mixer-remixes", JSON.stringify(nextSaved));
-    setStatus("Saved in this browser.");
+    setStatus(apiPayload ? "Saved to backend and mirrored in this browser." : "Saved in this browser.");
   }
 
   async function shareRemix() {
@@ -995,7 +1246,7 @@ function App() {
                         <Share2 aria-hidden="true" />
                         Share
                       </Button>
-                      <Button onClick={saveRemix} type="button">
+                      <Button onClick={() => void saveRemix()} type="button">
                         <Save aria-hidden="true" />
                         {savedCurrent ? "Saved" : "Save remix"}
                       </Button>

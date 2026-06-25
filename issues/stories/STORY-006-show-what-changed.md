@@ -1,6 +1,6 @@
 # STORY-006: Show What Changed
 
-Status: Backlog
+Status: Done
 
 ## User Story
 
