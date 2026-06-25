@@ -39,7 +39,7 @@ A user can paste a recipe or recipe link, choose a remix direction such as "Fren
 
 | Story | Status | Epic | Title |
 | --- | --- | --- | --- |
-| [STORY-000](stories/STORY-000-tech-stack-and-scaffolding.md) | Backlog | EPIC-006 | Tech Stack And Scaffolding |
+| [STORY-000](stories/STORY-000-tech-stack-and-scaffolding.md) | Done | EPIC-006 | Tech Stack And Scaffolding |
 | [STORY-001](stories/STORY-001-paste-recipe-text.md) | Backlog | EPIC-001 | Paste Recipe Text |
 | [STORY-002](stories/STORY-002-import-recipe-link.md) | Backlog | EPIC-001 | Import Recipe Link |
 | [STORY-003](stories/STORY-003-normalize-recipe-structure.md) | Backlog | EPIC-001 | Normalize Recipe Structure |

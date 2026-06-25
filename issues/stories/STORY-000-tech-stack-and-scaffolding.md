@@ -1,6 +1,6 @@
 # STORY-000: Tech Stack And Scaffolding
 
-Status: Backlog
+Status: Done
 
 ## User Story
 

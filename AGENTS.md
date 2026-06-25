@@ -10,9 +10,17 @@
 ## Project
 
 - Recipe Mixer is a recipe remixing website.
-- Current repo state is planning-first: backlog docs live under `issues/`.
+- Current repo state has an initial React + TypeScript + Vite frontend, Rust + Axum backend, Docker Compose, and Caddy web container scaffold.
+- Backlog docs live under `issues/`.
 - Planned stack: React + TypeScript + Vite frontend, Rust + Axum backend, SQLite, Docker Compose, Caddy web container, OpenRouter server-side API integration.
 - Raspberry Pi deployment through an existing Cloudflare Tunnel stays outside this app's Compose stack.
+
+## Frontend UI
+
+- Use shadcn/ui components by default where practical.
+- Initialize shadcn before building new frontend features if it is not already configured.
+- Use blocks.so through the shadcn registry only for AI interaction UI where it clearly fits.
+- Prefer shadcn patterns over custom component styling.
 
 ## Makefile
 
@@ -38,4 +46,7 @@
 
 - `make` or `make check`: validate expected planning files.
 - `make help`: list available targets.
-- `make lint`, `make test`, `make build`: currently alias `check` until app scaffold exists.
+- `make lint`: run frontend typecheck, `cargo fmt --check`, and `cargo clippy`.
+- `make test`: run frontend and backend tests.
+- `make build`: build frontend and backend artifacts.
+- `make compose-build`: build Docker images.

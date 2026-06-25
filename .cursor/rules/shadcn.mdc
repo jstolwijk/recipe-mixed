@@ -1,0 +1,19 @@
+---
+description: Use shadcn/ui for frontend UI work
+globs: apps/web/**/*.{ts,tsx,css}
+alwaysApply: false
+---
+
+# shadcn/ui
+
+- Use shadcn/ui components by default for frontend UI where practical.
+- If shadcn is not configured yet, initialize it before building new UI features.
+- Prefer shadcn components and local `components/ui` patterns over custom component styling.
+- Use Tailwind CSS tokens and CSS variables from the shadcn theme once configured.
+- Add shadcn components with `npx shadcn@latest add [component-name]`.
+
+# blocks.so
+
+- Use blocks.so through the shadcn registry only for AI interaction UI where it clearly fits.
+- Add the `@blocks-so` registry only when a selected block is needed.
+- Add blocks with `npx shadcn@latest add @blocks-so/[component-name]`.
