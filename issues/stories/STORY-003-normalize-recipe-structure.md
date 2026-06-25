@@ -1,6 +1,6 @@
 # STORY-003: Normalize Recipe Structure
 
-Status: Backlog
+Status: Done
 
 ## User Story
 

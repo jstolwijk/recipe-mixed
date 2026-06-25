@@ -29,12 +29,16 @@ import { Textarea } from "@/components/ui/textarea";
 type RemixDirection = "french" | "chinese" | "pantry" | "vegetarian";
 type FlowStep = "draft" | "loading" | "review";
 
-type ParsedRecipe = {
-  title: string;
+type NormalizedRecipe = {
+  source: "paste";
+  rawText: string;
+  title: string | null;
   ingredients: string[];
   steps: string[];
-  servings: string;
-  time: string;
+  servings: string | null;
+  timing: string | null;
+  notes: string | null;
+  missingFields: string[];
 };
 
 const defaultRecipe = `Creamy tomato pasta
@@ -168,22 +172,23 @@ function cleanListItem(line: string) {
   return line.replace(/^[-*•]\s*/, "").replace(/^\d+[.)]\s*/, "").trim();
 }
 
-function parseRecipeText(text: string): ParsedRecipe {
+function parseRecipeText(text: string): NormalizedRecipe {
   const lines = text
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter(Boolean);
   const title =
-    lines.find((line) => !/^(ingredients?|steps?|directions?|method|instructions?)$/i.test(line)) ?? "";
-  const servings = text.match(/\b(serves?|servings?|yield)\s*:?\s*([^\n]+)/i)?.[2]?.trim() ?? "";
-  const time =
+    lines.find((line) => !/^(ingredients?|steps?|directions?|method|instructions?|notes?)$/i.test(line)) ?? null;
+  const servings = text.match(/\b(serves?|servings?|yield)\s*:?\s*([^\n]+)/i)?.[2]?.trim() ?? null;
+  const timing =
     text.match(/\b(total|prep|cook)\s*time\s*:?\s*([^\n]+)/i)?.[2]?.trim() ??
     text.match(/\b(\d+\s*(?:minutes?|mins?|hours?|hrs?))\b/i)?.[1] ??
-    "";
+    null;
 
   const ingredients: string[] = [];
   const steps: string[] = [];
-  let section: "ingredients" | "steps" | null = null;
+  const notes: string[] = [];
+  let section: "ingredients" | "steps" | "notes" | null = null;
 
   for (const line of lines) {
     if (/^ingredients?:?$/i.test(line)) {
@@ -193,6 +198,11 @@ function parseRecipeText(text: string): ParsedRecipe {
 
     if (/^(steps?|directions?|method|instructions?):?$/i.test(line)) {
       section = "steps";
+      continue;
+    }
+
+    if (/^notes?:?$/i.test(line)) {
+      section = "notes";
       continue;
     }
 
@@ -207,17 +217,37 @@ function parseRecipeText(text: string): ParsedRecipe {
 
     if (section === "ingredients") {
       ingredients.push(item);
-    } else {
+    } else if (section === "steps") {
       steps.push(item);
+    } else {
+      notes.push(item);
     }
   }
 
-  return {
+  const normalized: NormalizedRecipe = {
+    source: "paste",
+    rawText: text,
     title,
     ingredients: ingredients.slice(0, 8),
     steps: steps.slice(0, 6),
     servings,
-    time
+    timing,
+    notes: notes.length ? notes.join(" ") : null,
+    missingFields: []
+  };
+
+  normalized.missingFields = [
+    normalized.title ? "" : "title",
+    normalized.ingredients.length ? "" : "ingredients",
+    normalized.steps.length ? "" : "steps",
+    normalized.servings ? "" : "servings",
+    normalized.timing ? "" : "timing",
+    normalized.notes ? "" : "notes"
+  ].filter(Boolean);
+
+  return {
+    ...normalized,
+    missingFields: normalized.missingFields
   };
 }
 
@@ -234,14 +264,15 @@ function App() {
 
   const remix = directionCopy[direction];
   const canReview = step === "review";
-  const parsedRecipe = React.useMemo(() => parseRecipeText(recipeText), [recipeText]);
+  const normalizedRecipe = React.useMemo(() => parseRecipeText(recipeText), [recipeText]);
   const recipeWordCount = recipeText.trim().split(/\s+/).filter(Boolean).length;
   const detectionCount = [
-    parsedRecipe.title,
-    parsedRecipe.servings,
-    parsedRecipe.time,
-    parsedRecipe.ingredients.length ? parsedRecipe.ingredients : "",
-    parsedRecipe.steps.length ? parsedRecipe.steps : ""
+    normalizedRecipe.title,
+    normalizedRecipe.servings,
+    normalizedRecipe.timing,
+    normalizedRecipe.ingredients.length ? normalizedRecipe.ingredients : "",
+    normalizedRecipe.steps.length ? normalizedRecipe.steps : "",
+    normalizedRecipe.notes
   ].filter(Boolean).length;
 
   function buildResultText() {
@@ -298,8 +329,8 @@ ${remix.changes.map((change) => `- ${change}`).join("\n")}`;
       "recipe-mixer-remixes",
       JSON.stringify([
         {
-          detected: parsedRecipe,
           direction: remix.label,
+          normalizedRecipe,
           original: recipeName,
           originalText: recipeText,
           savedAt: new Date().toISOString(),
@@ -583,7 +614,7 @@ ${remix.changes.map((change) => `- ${change}`).join("\n")}`;
 
             <Card>
               <CardHeader className="p-4 sm:p-5">
-                <CardTitle className="text-lg font-black">Detected from paste</CardTitle>
+                <CardTitle className="text-lg font-black">Normalized recipe</CardTitle>
               </CardHeader>
               <CardContent className="grid gap-4 p-4 pt-0 text-sm sm:p-5 sm:pt-0">
                 <div className="flex flex-wrap gap-2">
@@ -591,42 +622,43 @@ ${remix.changes.map((change) => `- ${change}`).join("\n")}`;
                   <Badge variant={detectionCount ? "default" : "outline"}>
                     {detectionCount ? `${detectionCount} fields` : "No fields yet"}
                   </Badge>
+                  <Badge variant="outline">source: {normalizedRecipe.source}</Badge>
                 </div>
 
                 <dl className="grid gap-3">
                   <div>
                     <dt className="font-bold">Title</dt>
-                    <dd className="mt-1 text-muted-foreground">{parsedRecipe.title || "Not detected"}</dd>
+                    <dd className="mt-1 text-muted-foreground">{normalizedRecipe.title || "Missing"}</dd>
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
                     <div>
                       <dt className="font-bold">Servings</dt>
-                      <dd className="mt-1 text-muted-foreground">{parsedRecipe.servings || "Not detected"}</dd>
+                      <dd className="mt-1 text-muted-foreground">{normalizedRecipe.servings || "Missing"}</dd>
                     </div>
                     <div>
-                      <dt className="font-bold">Time</dt>
-                      <dd className="mt-1 text-muted-foreground">{parsedRecipe.time || "Not detected"}</dd>
+                      <dt className="font-bold">Timing</dt>
+                      <dd className="mt-1 text-muted-foreground">{normalizedRecipe.timing || "Missing"}</dd>
                     </div>
                   </div>
                   <div>
                     <dt className="font-bold">Ingredients</dt>
                     <dd className="mt-2 grid gap-2">
-                      {parsedRecipe.ingredients.length ? (
-                        parsedRecipe.ingredients.map((ingredient) => (
+                      {normalizedRecipe.ingredients.length ? (
+                        normalizedRecipe.ingredients.map((ingredient) => (
                           <span className="rounded-md border bg-paper px-3 py-2" key={ingredient}>
                             {ingredient}
                           </span>
                         ))
                       ) : (
-                        <span className="text-muted-foreground">Not detected</span>
+                        <span className="text-muted-foreground">Missing</span>
                       )}
                     </dd>
                   </div>
                   <div>
                     <dt className="font-bold">Steps</dt>
                     <dd className="mt-2 grid gap-2">
-                      {parsedRecipe.steps.length ? (
-                        parsedRecipe.steps.map((recipeStep, index) => (
+                      {normalizedRecipe.steps.length ? (
+                        normalizedRecipe.steps.map((recipeStep, index) => (
                           <span
                             className="grid grid-cols-[24px_minmax(0,1fr)] rounded-md border bg-paper px-3 py-2"
                             key={recipeStep}
@@ -636,7 +668,25 @@ ${remix.changes.map((change) => `- ${change}`).join("\n")}`;
                           </span>
                         ))
                       ) : (
-                        <span className="text-muted-foreground">Not detected</span>
+                        <span className="text-muted-foreground">Missing</span>
+                      )}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="font-bold">Notes</dt>
+                    <dd className="mt-1 text-muted-foreground">{normalizedRecipe.notes || "Missing"}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-bold">Missing fields</dt>
+                    <dd className="mt-2 flex flex-wrap gap-2">
+                      {normalizedRecipe.missingFields.length ? (
+                        normalizedRecipe.missingFields.map((field) => (
+                          <Badge key={field} variant="outline">
+                            {field}
+                          </Badge>
+                        ))
+                      ) : (
+                        <Badge variant="default">complete</Badge>
                       )}
                     </dd>
                   </div>
