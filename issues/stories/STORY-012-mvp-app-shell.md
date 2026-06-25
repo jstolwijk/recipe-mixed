@@ -1,6 +1,6 @@
 # STORY-012: MVP App Shell
 
-Status: Backlog
+Status: Done
 
 ## User Story
 
