@@ -21,9 +21,10 @@ services:
       - no-new-privileges:true
     healthcheck:
       test: ["CMD", "/app/recipe-mixer-api", "--healthcheck"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 2s
 
   web:
     build:
@@ -45,9 +46,10 @@ services:
       - no-new-privileges:true
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 2s
 
 volumes:
   recipe-data:
