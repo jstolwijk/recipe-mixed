@@ -53,3 +53,25 @@ A user can paste a recipe or recipe link, choose a remix direction such as "Fren
 | [STORY-011](stories/STORY-011-share-or-copy-remix.md) | Backlog | EPIC-005 | Share Or Copy Remix |
 | [STORY-012](stories/STORY-012-mvp-app-shell.md) | Backlog | EPIC-006 | MVP App Shell |
 | [STORY-013](stories/STORY-013-sqlite-backup-strategy.md) | Backlog | EPIC-006 | SQLite Backup Strategy |
+
+## Development Order
+
+Buildable dependency spine:
+
+1. STORY-000: Tech Stack And Scaffolding
+2. STORY-012: MVP App Shell
+3. STORY-001: Paste Recipe Text
+4. STORY-003: Normalize Recipe Structure
+5. STORY-004: Select Remix Direction
+6. STORY-005: Generate Remixed Recipe
+7. STORY-007: Cooking Sanity Check
+8. STORY-006: Show What Changed
+9. STORY-009: Compare Original And Remix
+10. STORY-008: Remix Adjustments
+11. STORY-010: Save Remix
+12. STORY-011: Share Or Copy Remix
+
+Parallel or later work:
+
+- STORY-002: Import Recipe Link after STORY-003.
+- STORY-013: SQLite Backup Strategy after STORY-000.

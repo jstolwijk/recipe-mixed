@@ -28,4 +28,3 @@ SQLite is the right default database for the Raspberry Pi MVP, but the single da
 ## Dependencies
 
 - STORY-000: Tech Stack And Scaffolding
-- STORY-012: MVP App Shell

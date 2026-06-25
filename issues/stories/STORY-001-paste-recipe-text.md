@@ -23,4 +23,4 @@ Pasted text is the lowest-risk recipe input path for the MVP. It avoids the frag
 
 ## Dependencies
 
-- STORY-003: Normalize Recipe Structure
+- STORY-012: MVP App Shell

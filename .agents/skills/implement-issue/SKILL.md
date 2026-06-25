@@ -47,6 +47,14 @@ Run the narrowest relevant checks before commit:
 
 If checks cannot run, record the exact reason in final response and commit message body when relevant.
 
+## Update Status
+
+Before staging or committing, update the selected issue file status:
+
+1. If implementation satisfies acceptance criteria and verification passed, change `Status: Backlog` to `Status: Done`.
+2. If verification could not run but the implementation is still worth committing, update status only when the reason is non-blocking and the issue is genuinely complete.
+3. If implementation is partial, blocked, or failing checks, leave status unchanged and do not claim the issue is done.
+
 ## Commit
 
 Always commit completed changes unless the user explicitly says not to.
@@ -54,10 +62,11 @@ Always commit completed changes unless the user explicitly says not to.
 Commit workflow:
 
 1. Inspect `git status --short`.
-2. Stage only files changed for the selected issue.
-3. Use a concise Conventional Commit message.
-4. Include issue id in the commit body when one exists, for example `Refs STORY-012`.
-5. Do not include AI attribution trailers unless repo rules require them.
-6. After commit, report commit SHA, selected issue, and verification result.
+2. Confirm selected issue status reflects completed reality.
+3. Stage only files changed for the selected issue.
+4. Use a concise Conventional Commit message.
+5. Include issue id in the commit body when one exists, for example `Refs STORY-012`.
+6. Do not include AI attribution trailers unless repo rules require them.
+7. After commit, report commit SHA, selected issue, status update, and verification result.
 
 If implementation is blocked before any useful change, do not create an empty commit. Explain blocker and next action.

@@ -24,4 +24,3 @@ This is the primary value moment. The result needs to be structured, readable, a
 ## Dependencies
 
 - STORY-004: Select Remix Direction
-- STORY-007: Cooking Sanity Check

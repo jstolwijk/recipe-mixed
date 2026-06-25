@@ -24,6 +24,4 @@ Before polishing every feature, the MVP needs a simple path that demonstrates th
 
 ## Dependencies
 
-- STORY-001: Paste Recipe Text
-- STORY-004: Select Remix Direction
-- STORY-005: Generate Remixed Recipe
+- STORY-000: Tech Stack And Scaffolding

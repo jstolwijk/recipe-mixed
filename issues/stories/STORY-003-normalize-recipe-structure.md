@@ -24,4 +24,3 @@ Remixing works better when the system has explicit fields for title, ingredients
 ## Dependencies
 
 - STORY-001: Paste Recipe Text
-- STORY-002: Import Recipe Link
