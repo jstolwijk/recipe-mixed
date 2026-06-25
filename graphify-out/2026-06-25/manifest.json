@@ -115,8 +115,8 @@
     "semantic_hash": "893def771b2c8653b3ee9ea781d6d614"
   },
   "issues/README.md": {
-    "mtime": 1782419813.196492,
-    "ast_hash": "01a281856183972c736765f518580a60",
+    "mtime": 1782420706.9036775,
+    "ast_hash": "0a634d6b67622caecb801c41d3f710d4",
     "semantic_hash": ""
   },
   "issues/epics/EPIC-001-recipe-input.md": {
@@ -165,8 +165,8 @@
     "semantic_hash": ""
   },
   "issues/stories/STORY-003-normalize-recipe-structure.md": {
-    "mtime": 1782418841.483663,
-    "ast_hash": "231a4fe57ceef37d97a76707e11e5012",
+    "mtime": 1782420080.685089,
+    "ast_hash": "b8630e34b13b3f31c1ab00abd69561b6",
     "semantic_hash": ""
   },
   "issues/stories/STORY-004-select-remix-direction.md": {
@@ -215,8 +215,8 @@
     "semantic_hash": ""
   },
   "issues/stories/STORY-013-sqlite-backup-strategy.md": {
-    "mtime": 1782418842.0471568,
-    "ast_hash": "acae6a755e21cc81cbb981c8067ae923",
+    "mtime": 1782420703.1060286,
+    "ast_hash": "21f909274ee12484a4ea775cebd2aacc",
     "semantic_hash": ""
   },
   "issues/templates/epic.md": {
@@ -255,8 +255,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/main.tsx": {
-    "mtime": 1782419734.9496925,
-    "ast_hash": "d4a677e0bc650e4a48d96da87d627215",
+    "mtime": 1782420565.7160835,
+    "ast_hash": "f883f53fe004c86b15fd9c322534ea10",
     "semantic_hash": ""
   },
   "apps/web/tailwind.config.ts": {
@@ -275,8 +275,8 @@
     "semantic_hash": ""
   },
   "crates/api/src/main.rs": {
-    "mtime": 1782416779.207547,
-    "ast_hash": "e0192225001dafffee7c34ef206282c8",
+    "mtime": 1782420617.2377255,
+    "ast_hash": "def594a00ee6665ca7010ad3c6c8283b",
     "semantic_hash": ""
   },
   "scripts/deploy.sh": {
@@ -305,8 +305,8 @@
     "semantic_hash": ""
   },
   "docs/deployment.md": {
-    "mtime": 1782415831.729774,
-    "ast_hash": "86bcab929a9656161d47bdfb455555dc",
+    "mtime": 1782420699.500699,
+    "ast_hash": "34e17bc2406eb170e13fd385ee77fe04",
     "semantic_hash": ""
   },
   "apps/web/components.json": {
@@ -352,6 +352,16 @@
   "apps/web/src/lib/utils.ts": {
     "mtime": 1782417975.531273,
     "ast_hash": "618d00bf4537ce84f9ba62c5b215fb30",
+    "semantic_hash": ""
+  },
+  "scripts/backup.sh": {
+    "mtime": 1782420572.9199066,
+    "ast_hash": "9ea864df4f30f687e7aa462fe9587a98",
+    "semantic_hash": ""
+  },
+  "docs/backend-api.md": {
+    "mtime": 1782420760.2736566,
+    "ast_hash": "3c6426ac8e703d7790958a4c86fc2e7a",
     "semantic_hash": ""
   }
 }

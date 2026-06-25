@@ -1,16 +1,16 @@
 # Graph Report - recipe-mixer  (2026-06-25)
 
 ## Corpus Check
-- 67 files · ~19,021 words
+- 69 files · ~24,363 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 445 nodes · 515 edges · 36 communities (34 shown, 2 thin omitted)
+- 523 nodes · 805 edges · 45 communities (42 shown, 3 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `fc9b8f18`
+- Built from commit: `5674ba5f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -46,22 +46,32 @@
 - [[_COMMUNITY_Community 32|Community 32]]
 - [[_COMMUNITY_Community 33|Community 33]]
 - [[_COMMUNITY_Community 34|Community 34]]
+- [[_COMMUNITY_Community 35|Community 35]]
 - [[_COMMUNITY_Community 36|Community 36]]
+- [[_COMMUNITY_Community 37|Community 37]]
+- [[_COMMUNITY_Community 38|Community 38]]
 - [[_COMMUNITY_Community 39|Community 39]]
+- [[_COMMUNITY_Community 40|Community 40]]
+- [[_COMMUNITY_Community 41|Community 41]]
+- [[_COMMUNITY_Community 42|Community 42]]
+- [[_COMMUNITY_Community 43|Community 43]]
+- [[_COMMUNITY_Community 44|Community 44]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `compilerOptions` - 16 edges
-2. `STORY-000: Tech Stack And Scaffolding` - 15 edges
-3. `validate()` - 14 edges
-4. `compress_file()` - 12 edges
-5. `detect_file_type()` - 9 edges
-6. `Recipe Mixer Issues` - 8 edges
-7. `AppConfig` - 8 edges
-8. `should_compress()` - 8 edges
-9. `Implement Issue` - 7 edges
-10. `EPIC-001: Recipe Input` - 7 edges
+1. `NormalizedRecipe` - 18 edges
+2. `RemixResponse` - 16 edges
+3. `compilerOptions` - 16 edges
+4. `STORY-000: Tech Stack And Scaffolding` - 15 edges
+5. `ApiError` - 14 edges
+6. `validate()` - 14 edges
+7. `AppState` - 12 edges
+8. `compress_file()` - 12 edges
+9. `SavedRemix` - 11 edges
+10. `generate_remix()` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `compress_file()` --calls--> `validate()`  [EXTRACTED]
+  .agents/skills/caveman-compress/scripts/compress.py → .agents/skills/caveman-compress/scripts/validate.py
 - `benchmark_pair()` --calls--> `validate()`  [EXTRACTED]
   .agents/skills/caveman-compress/scripts/benchmark.py → .agents/skills/caveman-compress/scripts/validate.py
 - `main()` --calls--> `backup_dir_for()`  [EXTRACTED]
@@ -69,8 +79,6 @@
 - `main()` --calls--> `compress_file()`  [EXTRACTED]
   .agents/skills/caveman-compress/scripts/cli.py → .agents/skills/caveman-compress/scripts/compress.py
 - `main()` --calls--> `detect_file_type()`  [EXTRACTED]
-  .agents/skills/caveman-compress/scripts/cli.py → .agents/skills/caveman-compress/scripts/detect.py
-- `main()` --calls--> `should_compress()`  [EXTRACTED]
   .agents/skills/caveman-compress/scripts/cli.py → .agents/skills/caveman-compress/scripts/detect.py
 
 ## Import Cycles
@@ -83,23 +91,23 @@
 - **Trust And Iteration Loop** — stories_story_005_generate_remixed_recipe_generate_remixed_recipe, stories_story_006_show_what_changed_show_what_changed, stories_story_007_cooking_sanity_check_cooking_sanity_check, stories_story_008_remix_adjustments_remix_adjustments, stories_story_009_compare_original_and_remix_compare_original_and_remix [INFERRED 0.85]
 - **Raspberry Pi MVP Deployment Stack** — stories_story_000_tech_stack_and_scaffolding_tech_stack_and_scaffolding, stories_story_013_sqlite_backup_strategy_sqlite_backup_strategy, stories_story_000_tech_stack_and_scaffolding_sqlite, stories_story_000_tech_stack_and_scaffolding_docker_compose, stories_story_000_tech_stack_and_scaffolding_cloudflare_tunnel, stories_story_000_tech_stack_and_scaffolding_caddy [INFERRED 0.85]
 
-## Communities (36 total, 2 thin omitted)
+## Communities (45 total, 3 thin omitted)
 
 ### Community 0 - "Recipe Product Plan"
-Cohesion: 0.07
-Nodes (25): EPIC-003: Trust And Safety, Goal, Open Questions, Scope, Stories, Success Criteria, Why It Matters, Acceptance Criteria (+17 more)
+Cohesion: 0.22
+Nodes (6): Acceptance Criteria, Context, Dependencies, Notes, STORY-004: Select Remix Direction, User Story
 
 ### Community 1 - "Validation Script"
-Cohesion: 0.20
-Nodes (14): count_bullets(), extract_code_blocks(), extract_headings(), extract_inline_codes(), extract_paths(), extract_urls(), Line-based fenced code block extractor.      Handles ``` and ~~~ fences with var, validate_bullets() (+6 more)
+Cohesion: 0.17
+Nodes (20): benchmark_pair(), count_tokens(), main(), print_table(), count_bullets(), extract_code_blocks(), extract_headings(), extract_inline_codes() (+12 more)
 
 ### Community 2 - "Caveman Skill Suite"
 Cohesion: 0.17
 Nodes (11): Boundaries, Caveman Compress, Compress, Compression Rules, Pattern, Preserve EXACTLY (never modify), Preserve Structure, Process (+3 more)
 
 ### Community 3 - "Compression Workflow"
-Cohesion: 0.11
-Nodes (32): Path, benchmark_pair(), count_tokens(), main(), print_table(), main(), print_usage(), backup_dir_for() (+24 more)
+Cohesion: 0.13
+Nodes (26): Path, main(), print_usage(), backup_dir_for(), build_compress_prompt(), build_fix_prompt(), call_claude(), compress_file() (+18 more)
 
 ### Community 4 - "Delegation Modes"
 Cohesion: 0.17
@@ -122,8 +130,8 @@ Cohesion: 0.18
 Nodes (9): caveman-commit, Example output, How to invoke, See also, What it does, Auto-Clarity, Boundaries, Examples (+1 more)
 
 ### Community 9 - "Benchmarking Tools"
-Cohesion: 0.17
-Nodes (18): app(), HashMap, IntoResponse, Result, Router, Self, SocketAddr, AppConfig (+10 more)
+Cohesion: 0.18
+Nodes (14): HashMap, Result, Router, Row, Self, SocketAddr, app(), AppConfig (+6 more)
 
 ### Community 10 - "Product Thesis"
 Cohesion: 0.29
@@ -170,8 +178,8 @@ Cohesion: 0.11
 Nodes (18): compilerOptions, allowJs, allowSyntheticDefaultImports, esModuleInterop, forceConsistentCasingInFileNames, isolatedModules, jsx, lib (+10 more)
 
 ### Community 23 - "Community 23"
-Cohesion: 0.50
-Nodes (3): Deployment Notes, Raspberry Pi Deploy Assumptions, Runtime Shape
+Cohesion: 0.40
+Nodes (4): Deployment Notes, Raspberry Pi Deploy Assumptions, Runtime Shape, SQLite Backups
 
 ### Community 24 - "Community 24"
 Cohesion: 0.50
@@ -194,39 +202,67 @@ Cohesion: 0.29
 Nodes (6): Acceptance Criteria, Context, Dependencies, Notes, STORY-000: Story Title, User Story
 
 ### Community 33 - "Community 33"
-Cohesion: 0.07
-Nodes (25): EPIC-001: Recipe Input, Goal, Open Questions, Scope, Stories, Success Criteria, Why It Matters, Acceptance Criteria (+17 more)
+Cohesion: 0.29
+Nodes (7): EPIC-001: Recipe Input, Goal, Open Questions, Scope, Stories, Success Criteria, Why It Matters
 
 ### Community 34 - "Community 34"
-Cohesion: 0.22
-Nodes (8): cleanListItem(), directionCopy, FlowStep, ParsedRecipe, parseRecipeText(), RemixDirection, skillOptions, stepLabels
+Cohesion: 0.08
+Nodes (78): Arc, AxumPath, Client, Connection, IntoResponse, Json, Mutex, Option (+70 more)
+
+### Community 35 - "Community 35"
+Cohesion: 0.29
+Nodes (7): EPIC-003: Trust And Safety, Goal, Open Questions, Scope, Stories, Success Criteria, Why It Matters
 
 ### Community 36 - "Community 36"
 Cohesion: 0.33
 Nodes (6): Acceptance Criteria, Context, Dependencies, Notes, STORY-007: Cooking Sanity Check, User Story
 
+### Community 37 - "Community 37"
+Cohesion: 0.33
+Nodes (6): Acceptance Criteria, Context, Dependencies, Notes, STORY-001: Paste Recipe Text, User Story
+
+### Community 38 - "Community 38"
+Cohesion: 0.33
+Nodes (6): Acceptance Criteria, Context, Dependencies, Notes, STORY-002: Import Recipe Link, User Story
+
 ### Community 39 - "Community 39"
 Cohesion: 0.33
 Nodes (6): Acceptance Criteria, Context, Dependencies, Notes, STORY-005: Generate Remixed Recipe, User Story
 
+### Community 40 - "Community 40"
+Cohesion: 0.33
+Nodes (6): Acceptance Criteria, Context, Dependencies, Notes, STORY-003: Normalize Recipe Structure, User Story
+
+### Community 41 - "Community 41"
+Cohesion: 0.33
+Nodes (6): Acceptance Criteria, Context, Dependencies, Notes, STORY-012: MVP App Shell, User Story
+
+### Community 42 - "Community 42"
+Cohesion: 0.33
+Nodes (6): Acceptance Criteria, Context, Dependencies, Notes, STORY-013: SQLite Backup Strategy, User Story
+
+### Community 43 - "Community 43"
+Cohesion: 0.40
+Nodes (4): Backend API Contract, Recipe Input, Remix, Save And Share
+
 ## Knowledge Gaps
-- **268 isolated node(s):** `RemixDirection`, `FlowStep`, `ParsedRecipe`, `directionCopy`, `skillOptions` (+263 more)
+- **271 isolated node(s):** `Recipe Input`, `Remix`, `Save And Share`, `Runtime Shape`, `Raspberry Pi Deploy Assumptions` (+266 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `STORY-000: Tech Stack And Scaffolding` connect `React Frontend` to `Recipe Product Plan`?**
-  _High betweenness centrality (0.030) - this node is a cross-community bridge._
-- **Why does `Recipe Mixer Issues` connect `Community 31` to `Recipe Product Plan`?**
-  _High betweenness centrality (0.012) - this node is a cross-community bridge._
-- **What connects `RemixDirection`, `FlowStep`, `ParsedRecipe` to the rest of the system?**
-  _280 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Recipe Product Plan` be split into smaller, more focused modules?**
-  _Cohesion score 0.06666666666666667 - nodes in this community are weakly interconnected._
+- **Why does `STORY-000: Tech Stack And Scaffolding` connect `React Frontend` to `Community 18`?**
+  _High betweenness centrality (0.022) - this node is a cross-community bridge._
+- **Why does `Recipe Mixer Issues` connect `Community 31` to `Community 18`?**
+  _High betweenness centrality (0.008) - this node is a cross-community bridge._
+- **Why does `EPIC-001: Recipe Input` connect `Community 33` to `Community 18`?**
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
+- **What connects `Recipe Input`, `Remix`, `Save And Share` to the rest of the system?**
+  _283 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Compression Workflow` be split into smaller, more focused modules?**
-  _Cohesion score 0.10960960960960961 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.1310344827586207 - nodes in this community are weakly interconnected._
 - **Should `Content Detection` be split into smaller, more focused modules?**
   _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
 - **Should `MVP Infrastructure` be split into smaller, more focused modules?**
