@@ -52,7 +52,7 @@ A user can paste a recipe or recipe link, choose a remix direction such as "Fren
 | [STORY-010](stories/STORY-010-save-remix.md) | Backlog | EPIC-005 | Save Remix |
 | [STORY-011](stories/STORY-011-share-or-copy-remix.md) | Backlog | EPIC-005 | Share Or Copy Remix |
 | [STORY-012](stories/STORY-012-mvp-app-shell.md) | Backlog | EPIC-006 | MVP App Shell |
-| [STORY-013](stories/STORY-013-sqlite-backup-strategy.md) | Backlog | EPIC-006 | SQLite Backup Strategy |
+| [STORY-013](stories/STORY-013-sqlite-backup-strategy.md) | Done | EPIC-006 | SQLite Backup Strategy |
 
 ## Development Order
 

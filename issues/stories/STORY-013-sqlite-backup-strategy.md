@@ -1,6 +1,6 @@
 # STORY-013: SQLite Backup Strategy
 
-Status: Backlog
+Status: Done
 
 ## User Story
 
