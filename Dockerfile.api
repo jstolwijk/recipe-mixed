@@ -7,10 +7,12 @@ COPY crates ./crates
 
 FROM planner AS builder
 RUN cargo build --release -p recipe-mixer-api
+RUN install -d -m 0755 /runtime-data
 
 FROM gcr.io/distroless/cc-debian12:nonroot AS runtime
 WORKDIR /app
 COPY --from=builder /app/target/release/recipe-mixer-api /app/recipe-mixer-api
+COPY --from=builder --chown=nonroot:nonroot /runtime-data /data
 USER nonroot:nonroot
 EXPOSE 8080
 ENTRYPOINT ["/app/recipe-mixer-api"]
