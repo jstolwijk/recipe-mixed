@@ -290,6 +290,23 @@ function safeJsonParse<T>(value: string | null, fallback: T): T {
   }
 }
 
+function isSavedRemix(value: unknown): value is SavedRemix {
+  const saved = value as Partial<SavedRemix> | null;
+  return Boolean(
+    saved?.id &&
+      saved.original?.title &&
+      saved.original?.rawText &&
+      saved.remix?.id &&
+      saved.remix?.title &&
+      saved.remix?.directionLabel
+  );
+}
+
+function savedRemixesFromStorage() {
+  const saved = safeJsonParse<unknown>(window.localStorage.getItem("recipe-mixer-remixes"), []);
+  return Array.isArray(saved) ? saved.filter(isSavedRemix) : [];
+}
+
 function extractSection(lines: string[], names: string[]) {
   const values: string[] = [];
   let active = false;
@@ -739,9 +756,7 @@ function App() {
   });
   const [remix, setRemix] = React.useState<RemixResult | null>(null);
   const [priorRemixes, setPriorRemixes] = React.useState<RemixResult[]>([]);
-  const [savedRemixes, setSavedRemixes] = React.useState<SavedRemix[]>(() =>
-    safeJsonParse<SavedRemix[]>(window.localStorage.getItem("recipe-mixer-remixes"), [])
-  );
+  const [savedRemixes, setSavedRemixes] = React.useState<SavedRemix[]>(savedRemixesFromStorage);
   const [step, setStep] = React.useState<FlowStep>("draft");
   const [compareView, setCompareView] = React.useState<CompareView>("remix");
   const [status, setStatus] = React.useState("");
@@ -755,7 +770,7 @@ function App() {
   );
   const activeRecipe = step === "draft" ? draftRecipe : recipe;
   const recipeWordCount = recipeText.trim().split(/\s+/).filter(Boolean).length;
-  const savedCurrent = Boolean(remix && savedRemixes.some((saved) => saved.remix.id === remix.id));
+  const savedCurrent = Boolean(remix && savedRemixes.some((saved) => saved.remix?.id === remix.id));
 
   function updateSettings(patch: Partial<RemixSettings>) {
     setSettings((current) => ({ ...current, ...patch }));
@@ -885,7 +900,7 @@ function App() {
       savedAt: new Date().toISOString(),
       sharePath: `#remix-${remix.id}`
     };
-    const nextSaved = [saved, ...savedRemixes.filter((item) => item.remix.id !== remix.id)].slice(0, 8);
+    const nextSaved = [saved, ...savedRemixes.filter((item) => item.remix?.id !== remix.id)].slice(0, 8);
     setSavedRemixes(nextSaved);
     window.localStorage.setItem("recipe-mixer-remixes", JSON.stringify(nextSaved));
     setStatus(apiPayload ? "Saved to backend and mirrored in this browser." : "Saved in this browser.");

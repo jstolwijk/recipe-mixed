@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "docker-compose.yml": {
-    "mtime": 1782416779.3902864,
-    "ast_hash": "8d8057360cc8d93acaed06a634e84316",
+    "mtime": 1782421386.7046964,
+    "ast_hash": "f0ace6992d8d5229eb78d1f29ac52ec4",
     "semantic_hash": ""
   },
   "docs/deployment.md": {
